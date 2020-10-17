@@ -1,7 +1,8 @@
 <?php
 
-use App\Http\Controllers\AuthController;
-use App\Http\Controllers\UserController;
+use App\Http\Controllers\Advert\AdvertController;
+use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\User\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,6 +20,17 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::get('/login', function () {
     return response()->json(['You have to login']);
 })->name('login');
+
+Route::get('/adverts', [AdvertController::class, 'index']);
+Route::get('/adverts/{id}', [AdvertController::class, 'show']);
+
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/users', [UserController::class, 'index']);
+
+    Route::post('/adverts', [AdvertController::class, 'store']);
+    Route::put('/adverts/{id}', [AdvertController::class, 'update']);
+    Route::delete('/adverts/{id}', [AdvertController::class, 'delete']);
 });
+
+
+

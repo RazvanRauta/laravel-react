@@ -19,5 +19,7 @@ class DatabaseSeeder extends Seeder
             'name' => 'Tasty',
             'email' => 'test@testy.com',
             'password' => Hash::make('password')]);
+
+        $this->call(AdvertSeeder::class);
     }
 }
