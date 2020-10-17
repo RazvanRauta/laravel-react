@@ -1,0 +1,75 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Amazing Laravel Api",
+        "description": "Not enough words to describe it",
+        "contact": {
+            "email": "razvan@rrazvan.dev"
+        },
+        "license": {
+            "name": "Apache 2.0",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+        },
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/api/login": {
+            "post": {
+                "summary": "Login with email and password",
+                "operationId": "App\\Http\\Controllers\\AuthController::login",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "email": {
+                                        "type": "string"
+                                    },
+                                    "password": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object",
+                                "example": {
+                                    "email": "test@testy.com",
+                                    "password": "password"
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Access code",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status_code": {
+                                            "type": "int"
+                                        },
+                                        "access_token": {
+                                            "type": "string"
+                                        },
+                                        "token_type": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object",
+                                    "example": {
+                                        "status_code": 200,
+                                        "access_token": "1|CLjA6Efso0bncROxknVwpdWqJx8Ohg1OazrAut8M",
+                                        "token_type": "Bearer"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "security": [
+        []
+    ]
+}

@@ -52,6 +52,10 @@ COPY ./laravel.ini /usr/local/etc/php/conf.d/laravel.ini
 
 CMD php artisan migrate --force
 
+CMD php artisan db:seed
+
+CMD php artisan ket:generate
+
 EXPOSE 9000
 
 CMD ["php-fpm"]
