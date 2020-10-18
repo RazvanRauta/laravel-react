@@ -4,8 +4,9 @@
  *  Time: 12:18
  */
 
-import { Container } from '@material-ui/core'
 import React, { Fragment } from 'react'
+
+import { Container } from '@material-ui/core'
 import useStyles from './styles'
 
 const Main: React.FC = ({ children }) => {

@@ -4,7 +4,8 @@
  *  Time: 13:44
  */
 
-import { CircularProgress, Box } from '@material-ui/core'
+import { Box, CircularProgress } from '@material-ui/core'
+
 import React from 'react'
 
 const Loader = () => {

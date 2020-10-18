@@ -5,6 +5,9 @@
  */
 
 import Advert from '@/models/advert'
+import { RootState } from '@/redux/rootReducer'
+import { SET_ADVERTS_DATA } from '@/redux/actions/adverts'
+import { ThunkAction } from 'redux-thunk'
 
 export interface PaginationLinks {
   url: string
@@ -27,3 +30,21 @@ export interface AdvertsApiResponse {
   to: number
   total: number
 }
+
+export interface AdvertsState {
+  advertsData: AdvertsApiResponse | null
+}
+
+export interface SetAdvertsAction {
+  type: typeof SET_ADVERTS_DATA
+  advertsData: AdvertsApiResponse
+}
+
+export type SetAdvertsThunkAction = ThunkAction<
+  void,
+  RootState,
+  unknown,
+  SetAdvertsAction
+>
+
+export type AdvertsActionTypes = SetAdvertsAction

@@ -13,7 +13,12 @@ class AdvertsApi extends HttpClient {
     super(process.env.REACT_APP_API_URL ?? '')
   }
 
-  public getAdverts = () => this.instance.get<AdvertsApiResponse>('/adverts')
+  public getAdverts = (page?: number) =>
+    this.instance.get<AdvertsApiResponse>('/adverts', {
+      params: {
+        page,
+      },
+    })
 
   public getAdvert = (id: number) => this.instance.get<Advert>(`/adverts/${id}`)
 }

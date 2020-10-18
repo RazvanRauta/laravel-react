@@ -3,10 +3,11 @@
  *  Date: Oct 18 2020
  *  Time: 12:33
  */
-import React, { Fragment } from 'react'
-import { Toolbar, Button, Typography, Box } from '@material-ui/core'
-import { Link } from 'react-router-dom'
 
+import { Box, Button, Toolbar, Typography } from '@material-ui/core'
+import React, { Fragment } from 'react'
+
+import { Link } from 'react-router-dom'
 import useStyles from './styles'
 
 const Header: React.FC = () => {

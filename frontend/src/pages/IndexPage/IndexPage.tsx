@@ -4,34 +4,55 @@
  *  Time: 13:14
  */
 
-import { Typography } from '@material-ui/core'
-import React, { useState, useEffect } from 'react'
+import * as advertsActions from '@/redux/actions/adverts'
+
+import { Container, Typography } from '@material-ui/core'
+import React, { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+
 import Loader from '@/components/Loader'
-import AdvertsApi from '@/services/adverts-api'
+import { Pagination } from 'react-laravel-paginex'
+import { RootState } from '@/redux/rootReducer'
 
 const IndexPage: React.FC = () => {
-  const [adverts, setAdverts] = useState(null)
   const [loading, setLoading] = useState(false)
 
-  const fetchData = async () => {
-    const advertsApi = new AdvertsApi()
+  const advertsData = useSelector(
+    (state: RootState) => state.advertsData.advertsData
+  )
+  const dispatch = useDispatch()
+
+  const adverts = advertsData?.data!
+
+  const getData = async (data?: any) => {
+    setLoading(true)
     try {
-      const res = await advertsApi.getAdverts()
-    } catch (error) {
-      console.log({ error })
+      await dispatch(advertsActions.fetchAdverts(data?.page))
+    } catch (err) {
+      console.log(err)
     }
     setLoading(false)
   }
 
   useEffect(() => {
-    setLoading(true)
-    fetchData()
+    getData()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  return !loading ? (
-    <Typography variant="body1">IndexPage Component</Typography>
-  ) : (
-    <Loader />
+  return (
+    <>
+      {!loading ? (
+        <Container style={{ width: '100%', height: '100%' }}>
+          {adverts &&
+            adverts.map((advert) => (
+              <Typography key={advert.id}>{advert.title}</Typography>
+            ))}
+        </Container>
+      ) : (
+        <Loader />
+      )}
+      <Pagination changePage={getData} data={advertsData ?? {}} />
+    </>
   )
 }
 

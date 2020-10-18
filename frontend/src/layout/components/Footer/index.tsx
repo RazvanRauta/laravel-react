@@ -5,8 +5,8 @@
  */
 
 import { Container } from '@material-ui/core'
-import React from 'react'
 import Copyright from '../Copyright'
+import React from 'react'
 import useStyles from './styles'
 
 const Footer: React.FC = () => {

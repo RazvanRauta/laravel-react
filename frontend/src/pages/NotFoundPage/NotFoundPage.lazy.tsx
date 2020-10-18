@@ -4,8 +4,9 @@
  *  Time: 13:13
  */
 
+import React, { Suspense, lazy } from 'react'
+
 import Loader from '@/components/Loader'
-import React, { lazy, Suspense } from 'react'
 
 const LazyNotFoundPage = lazy(() => import('./NotFoundPage'))
 
