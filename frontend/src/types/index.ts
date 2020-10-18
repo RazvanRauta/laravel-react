@@ -1,3 +1,9 @@
+/**
+ * @ @author: Razvan Rauta
+ * @ Date: Oct 18 2020
+ * @ Time: 19:19
+ */
+
 import Advert from '@/models/advert'
 
 export interface PaginationLinks {
