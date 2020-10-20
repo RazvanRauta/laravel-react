@@ -27,7 +27,7 @@ class AdvertController extends ApiController
     public function index(): JsonResponse
     {
         $adverts = Advert::paginate(6);
-        return $adverts ?
+        return count($adverts) > 0 ?
             $this->successResponse($adverts) :
             $this->errorResponse('No adverts were found', 404);
     }

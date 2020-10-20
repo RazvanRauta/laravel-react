@@ -8,7 +8,9 @@ import * as advertsActions from '@/redux/actions/adverts'
 
 import { Box, Grid } from '@material-ui/core'
 import React, { Fragment, useEffect, useState } from 'react'
+import axios, { CancelToken } from 'axios'
 import { useDispatch, useSelector } from 'react-redux'
+import { useHistory, useRouteMatch } from 'react-router-dom'
 
 import AdvertCard from '@/components/AdvertCard'
 import Loader from '@/components/Loader'
@@ -19,33 +21,46 @@ import useStyles from './styles'
 const IndexPage: React.FC = () => {
   const [loading, setLoading] = useState(false)
   const classes = useStyles()
+  const match = useRouteMatch()
+  const history = useHistory()
+  const dispatch = useDispatch()
 
   const advertsData = useSelector(
     (state: RootState) => state.advertsData.advertsData
   )
-  const dispatch = useDispatch()
 
   const adverts = advertsData?.data!
   const last_page = advertsData?.last_page ?? 1
   const current_page = advertsData?.current_page
 
-  const getData = async (page?: number) => {
+  const getData = async (page?: number, cancelToken?: CancelToken) => {
     setLoading(true)
     try {
-      await dispatch(advertsActions.fetchAdverts(page))
+      await dispatch(advertsActions.fetchAdverts(page, cancelToken))
+      setLoading(false)
     } catch (err) {
       console.log(err)
+      history.push('/404')
     }
-    setLoading(false)
   }
 
   useEffect(() => {
-    getData()
+    const CancelToken = axios.CancelToken
+    const source = CancelToken.source()
+    //@ts-ignore
+    const { id } = match.params
+
+    getData(id, source.token)
+
+    return () => {
+      source.cancel()
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const handlePageChange = (_: any, page: number) => {
     getData(page)
+    window.history.pushState({}, `Page ${page}`, `/page/${page}`)
   }
 
   return (
