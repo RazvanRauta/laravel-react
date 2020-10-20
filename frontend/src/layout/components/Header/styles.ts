@@ -10,7 +10,7 @@ const useStyles = makeStyles((theme) => ({
   toolbar: {
     padding: theme.spacing(3, 2),
     justifyContent: 'space-between',
-    backgroundColor:
+    background:
       theme.palette.type === 'light'
         ? theme.palette.primary.light
         : theme.palette.primary.dark,

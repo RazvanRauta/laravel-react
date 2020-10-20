@@ -11,7 +11,7 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(3, 2),
     textAlign: 'center',
     marginTop: 'auto',
-    backgroundColor:
+    background:
       theme.palette.type === 'light'
         ? theme.palette.primary.light
         : theme.palette.primary.dark,

@@ -6,7 +6,8 @@ export const darkTheme = createMuiTheme({
     type: 'dark', // Name of the theme
     primary: {
       main: '#152B38',
-      dark: '#002884',
+      dark:
+        'linear-gradient(45deg, rgba(4, 23, 92, 0.45) 0%, rgba(4, 23, 92, 0.45) 25%,rgba(23, 46, 132, 0.45) 25%, rgba(23, 46, 132, 0.45) 50%,rgba(42, 70, 173, 0.45) 50%, rgba(42, 70, 173, 0.45) 75%,rgba(61, 93, 213, 0.45) 75%, rgba(61, 93, 213, 0.45) 100%),linear-gradient(135deg, rgb(8, 63, 29) 0%, rgb(8, 63, 29) 25%,rgb(39, 70, 68) 25%, rgb(39, 70, 68) 50%,rgb(69, 77, 107) 50%, rgb(69, 77, 107) 75%,rgb(100, 84, 146) 75%, rgb(100, 84, 146) 100%)',
       contrastText: '#fff',
     },
     secondary: {

@@ -24,7 +24,7 @@ const Loader = () => {
   }, [])
 
   return (
-    <Box display="flex" width={500} height={300}>
+    <Box display="flex" width={500} height={'60vh'} m="auto">
       <Box m="auto">
         <CircularProgress
           variant="determinate"

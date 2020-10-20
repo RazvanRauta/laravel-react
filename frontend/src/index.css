@@ -3,3 +3,6 @@
   flex-direction: column;
   min-height: 100vh;
 }
+body {
+  background: linear-gradient(45deg, #203a43, #0f2027, #2c5364);
+}

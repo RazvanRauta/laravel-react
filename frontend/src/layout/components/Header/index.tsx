@@ -31,6 +31,7 @@ const Header: React.FC = () => {
             component={Link}
             to={'/login'}
             variant="outlined"
+            color="secondary"
             size="small"
           >
             Login
@@ -39,6 +40,7 @@ const Header: React.FC = () => {
             component={Link}
             to={'/signUp'}
             variant="outlined"
+            color="secondary"
             size="small"
           >
             Sign up

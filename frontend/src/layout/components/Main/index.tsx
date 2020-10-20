@@ -12,7 +12,7 @@ import useStyles from './styles'
 const Main: React.FC = ({ children }) => {
   const classes = useStyles()
   return (
-    <Container component="main" className={classes.main} maxWidth="sm">
+    <Container component="main" className={classes.main} maxWidth="md">
       <Fragment>{children}</Fragment>
     </Container>
   )
