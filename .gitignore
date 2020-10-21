@@ -1,2 +1,4 @@
 /.idea/
 frontend/debug.log
+frontend/.vscode/settings.json
+frontend/generate-react-cli.json

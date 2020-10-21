@@ -4,7 +4,7 @@
  *  Time: 20:58
  */
 
-import { AttachMoney, Today } from '@material-ui/icons'
+import { AttachMoney, HomeOutlined, Today } from '@material-ui/icons'
 import {
   Box,
   Card,
@@ -15,6 +15,7 @@ import {
   Divider,
   Typography,
 } from '@material-ui/core'
+import { Link, useHistory } from 'react-router-dom'
 
 import Advert from '@/models/advert'
 import React from 'react'
@@ -26,46 +27,57 @@ const AdvertCard: React.FC<Advert> = ({
   description,
   price,
   postedDate,
+  rooms,
+  id,
 }) => {
   const classes = useStyles()
 
   return (
     <Card className={classes.root}>
-      <CardActionArea>
-        <CardMedia
-          className={classes.media}
-          image="https://static.realt.by/user/8e/k/r2001v45uk8e/6960d160b7.jpg?1545387494"
-          title={title}
-        />
-        <CardContent className={classes.content}>
-          <Typography gutterBottom variant="subtitle1" component="h2" noWrap>
-            {title}
-          </Typography>
-          <Typography
-            gutterBottom
-            variant="body2"
-            color="textSecondary"
-            component="p"
-          >
-            {description}
-          </Typography>
-          <Divider classes={{ root: classes.divider }} />
-          <Box display="flex" justifyContent="space-between" marginTop={1}>
-            <Chip
-              icon={<AttachMoney />}
-              label={price}
-              color="secondary"
-              variant="outlined"
-            />
-            <Chip
-              icon={<Today />}
-              label={format(new Date(postedDate), 'MMM dd, yyyy')}
-              color="secondary"
-              variant="outlined"
-            />
-          </Box>
-        </CardContent>
-      </CardActionArea>
+      <Link className={classes.link} to={`/adv/${id}`}>
+        <CardActionArea>
+          <CardMedia
+            className={classes.media}
+            image="https://static.realt.by/user/8e/k/r2001v45uk8e/6960d160b7.jpg?1545387494"
+            title={title}
+          />
+          <CardContent className={classes.content}>
+            <Typography gutterBottom variant="subtitle1" component="h2" noWrap>
+              {title}
+            </Typography>
+            <Typography
+              gutterBottom
+              variant="body2"
+              color="textSecondary"
+              component="p"
+              className={classes.description}
+            >
+              {description}
+            </Typography>
+            <Divider classes={{ root: classes.divider }} />
+            <Box display="flex" justifyContent="space-between" marginTop={1}>
+              <Chip
+                icon={<AttachMoney />}
+                label={price}
+                color="secondary"
+                variant="outlined"
+              />
+              <Chip
+                icon={<HomeOutlined />}
+                label={rooms > 1 ? `${rooms} Rooms` : `One Room`}
+                color="secondary"
+                variant="outlined"
+              />
+              <Chip
+                icon={<Today />}
+                label={format(new Date(postedDate), 'MMM dd, yyyy')}
+                color="secondary"
+                variant="outlined"
+              />
+            </Box>
+          </CardContent>
+        </CardActionArea>
+      </Link>
     </Card>
   )
 }

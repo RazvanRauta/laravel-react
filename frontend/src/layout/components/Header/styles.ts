@@ -18,6 +18,9 @@ const useStyles = makeStyles((theme) => ({
   toolbarTitle: {
     textDecoration: 'none',
   },
+  button: {
+    margin: '0 5px',
+  },
 }))
 
 export default useStyles

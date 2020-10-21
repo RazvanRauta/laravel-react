@@ -12,13 +12,25 @@ const useStyles = makeStyles({
     height: '100%',
   },
   media: {
-    height: 140,
+    height: 220,
   },
   content: {
     height: '100%',
   },
+  description: {
+    overflow: 'hidden',
+    display: '-webkit-box',
+    '-webkit-line-clamp': 3,
+    '-webkit-box-orient': 'vertical',
+  },
   divider: {
     margin: '10px 0 !important',
+  },
+  link: {
+    color: 'inherit',
+    textDecoration: 'none',
+    margin: 0,
+    padding: 0,
   },
 })
 

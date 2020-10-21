@@ -6,10 +6,12 @@
 
 import { AdvertsActionTypes, AdvertsState } from '@/types'
 
+import Advert from '@/models/advert'
 import { SET_ADVERTS_DATA } from '../actions/adverts'
 
 const initialState: AdvertsState = {
   advertsData: null,
+  adverts: null,
 }
 
 export default (
@@ -18,8 +20,14 @@ export default (
 ): AdvertsState => {
   switch (action.type) {
     case SET_ADVERTS_DATA:
+      const listOfAds: Advert[] = []
+      const advertsDatum = action.advertsData.data
+
+      advertsDatum.forEach((ad) => listOfAds.push(new Advert({ ...ad })))
+
       return {
         advertsData: action.advertsData,
+        adverts: [...listOfAds],
       }
 
     default:

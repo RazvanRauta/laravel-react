@@ -5,6 +5,7 @@
  */
 
 import { Box, Button, Toolbar, Typography } from '@material-ui/core'
+import { HOME_ROUTE, SETTINGS_ROUTE, SIGN_IN_ROUTE } from '@/routes'
 import React, { Fragment } from 'react'
 
 import { Link } from 'react-router-dom'
@@ -17,7 +18,7 @@ const Header: React.FC = () => {
       <Toolbar className={classes.toolbar}>
         <Typography
           component={Link}
-          to={'/'}
+          to={HOME_ROUTE}
           variant="h5"
           color="inherit"
           align="center"
@@ -26,24 +27,34 @@ const Header: React.FC = () => {
         >
           Amazing Real Estates
         </Typography>
-        <Box display="flex">
+        <Box display="flex" alignContent="center" justifyContent="space-around">
           <Button
             component={Link}
-            to={'/login'}
+            to={SIGN_IN_ROUTE}
             variant="outlined"
             color="secondary"
             size="small"
+            className={classes.button}
           >
-            Login
+            Sign In
           </Button>
           <Button
             component={Link}
-            to={'/signUp'}
+            to={SETTINGS_ROUTE}
             variant="outlined"
             color="secondary"
             size="small"
+            className={classes.button}
           >
-            Sign up
+            Settings
+          </Button>
+          <Button
+            variant="outlined"
+            color="secondary"
+            size="small"
+            className={classes.button}
+          >
+            Log Out
           </Button>
         </Box>
       </Toolbar>

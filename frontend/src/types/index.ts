@@ -33,6 +33,7 @@ export interface AdvertsApiResponse {
 
 export interface AdvertsState {
   advertsData: AdvertsApiResponse | null
+  adverts: Advert[] | null
 }
 
 export interface SetAdvertsAction {

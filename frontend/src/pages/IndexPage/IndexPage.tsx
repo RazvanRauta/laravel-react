@@ -6,20 +6,23 @@
 
 import * as advertsActions from '@/redux/actions/adverts'
 
-import { Box, Grid } from '@material-ui/core'
+import { Box, Fab, Grid, SwipeableDrawer } from '@material-ui/core'
 import React, { Fragment, useEffect, useState } from 'react'
 import axios, { CancelToken } from 'axios'
 import { useDispatch, useSelector } from 'react-redux'
 import { useHistory, useRouteMatch } from 'react-router-dom'
 
 import AdvertCard from '@/components/AdvertCard'
+import { FilterList } from '@material-ui/icons'
 import Loader from '@/components/Loader'
+import { NOT_FOUND_ROUTE } from '@/routes'
 import Pagination from '@material-ui/lab/Pagination'
 import { RootState } from '@/redux/rootReducer'
 import useStyles from './styles'
 
 const IndexPage: React.FC = () => {
   const [loading, setLoading] = useState(false)
+  const [open, setOpened] = useState(false)
   const classes = useStyles()
   const match = useRouteMatch()
   const history = useHistory()
@@ -29,7 +32,7 @@ const IndexPage: React.FC = () => {
     (state: RootState) => state.advertsData.advertsData
   )
 
-  const adverts = advertsData?.data!
+  const adverts = useSelector((state: RootState) => state.advertsData.adverts)
   const last_page = advertsData?.last_page ?? 1
   const current_page = advertsData?.current_page
 
@@ -40,7 +43,7 @@ const IndexPage: React.FC = () => {
       setLoading(false)
     } catch (err) {
       console.log(err)
-      history.push('/404')
+      history.push(NOT_FOUND_ROUTE)
     }
   }
 
@@ -61,6 +64,21 @@ const IndexPage: React.FC = () => {
   const handlePageChange = (_: any, page: number) => {
     getData(page)
     window.history.pushState({}, `Page ${page}`, `/page/${page}`)
+  }
+
+  const toggleDrawer = (open: boolean) => (
+    event: React.KeyboardEvent | React.MouseEvent
+  ) => {
+    if (
+      event &&
+      event.type === 'keydown' &&
+      ((event as React.KeyboardEvent).key === 'Tab' ||
+        (event as React.KeyboardEvent).key === 'Shift')
+    ) {
+      return
+    }
+
+    setOpened(open)
   }
 
   return (
@@ -91,6 +109,23 @@ const IndexPage: React.FC = () => {
             hidePrevButton={current_page === 1}
             hideNextButton={current_page === last_page}
           />
+          <Fab
+            variant="extended"
+            className={classes.fab}
+            color="default"
+            onClick={toggleDrawer(true)}
+          >
+            <FilterList className={classes.extendedIcon} />
+            Filter
+          </Fab>
+          <SwipeableDrawer
+            anchor={'left'}
+            open={open}
+            onClose={toggleDrawer(false)}
+            onOpen={toggleDrawer(true)}
+          >
+            Content
+          </SwipeableDrawer>
         </Fragment>
       ) : (
         <Loader />
