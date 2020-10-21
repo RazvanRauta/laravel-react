@@ -21,6 +21,7 @@ class CreateAdvertsTable extends Migration
             $table->dateTime('postedDate');
             $table->string('advertUrl');
             $table->string('imageUrl');
+            $table->integer('rooms');
             $table->string('advertId')->unique();
             $table->timestamps();
         });

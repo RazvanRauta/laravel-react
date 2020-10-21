@@ -24,11 +24,12 @@ class AdvertFactory extends Factory
         return [
             'title' => $this->faker->sentence(5),
             'description' => $this->faker->paragraph,
-            'price' => '$' . $this->faker->numberBetween(100, 1000) . '/ month',
+            'price' => $this->faker->numberBetween(100, 1000) . '/ month',
             'postedDate' => $this->faker->dateTime,
             'advertUrl' => $this->faker->url,
             'imageUrl' => $this->faker->imageUrl(),
-            'advertId' => '#' . $this->faker->numberBetween(10000, 100000)
+            'advertId' => '#' . $this->faker->numberBetween(10000, 100000),
+            'rooms' =>$this->faker->numberBetween(1,4)
         ];
     }
 }
