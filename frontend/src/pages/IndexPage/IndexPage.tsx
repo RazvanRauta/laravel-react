@@ -19,6 +19,8 @@ import { NOT_FOUND_ROUTE } from '@/routes'
 import Pagination from '@material-ui/lab/Pagination'
 import { RootState } from '@/redux/rootReducer'
 import useStyles from './styles'
+import DrawerContent from '@/components/DrawerContent'
+import { AdvertsFilter } from '@/types'
 
 const IndexPage: React.FC = () => {
   const [loading, setLoading] = useState(false)
@@ -35,6 +37,19 @@ const IndexPage: React.FC = () => {
   const adverts = useSelector((state: RootState) => state.advertsData.adverts)
   const last_page = advertsData?.last_page ?? 1
   const current_page = advertsData?.current_page
+
+  let filterForm: any = null
+
+  const handleSubmitFiltersForm = async (e: any) => {
+    if (filterForm) {
+      await filterForm.submitForm(e)
+    }
+  }
+  const bindSubmitForm = (
+    submitForm: (() => Promise<void>) & (() => Promise<any>)
+  ) => {
+    filterForm = { submitForm }
+  }
 
   const getData = async (page?: number, cancelToken?: CancelToken) => {
     setLoading(true)
@@ -66,7 +81,7 @@ const IndexPage: React.FC = () => {
     window.history.pushState({}, `Page ${page}`, `/page/${page}`)
   }
 
-  const toggleDrawer = (open: boolean) => (
+  const toggleDrawer = (open: boolean) => async (
     event: React.KeyboardEvent | React.MouseEvent
   ) => {
     if (
@@ -76,6 +91,10 @@ const IndexPage: React.FC = () => {
         (event as React.KeyboardEvent).key === 'Shift')
     ) {
       return
+    }
+
+    if (!open) {
+      await handleSubmitFiltersForm(event)
     }
 
     setOpened(open)
@@ -124,7 +143,7 @@ const IndexPage: React.FC = () => {
             onClose={toggleDrawer(false)}
             onOpen={toggleDrawer(true)}
           >
-            Content
+            <DrawerContent bindFiltersForm={bindSubmitForm} />
           </SwipeableDrawer>
         </Fragment>
       ) : (

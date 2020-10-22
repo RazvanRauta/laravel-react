@@ -15,6 +15,14 @@ export interface PaginationLinks {
   active: boolean
 }
 
+export interface AdvertsFilter {
+  priceRange: number[]
+  '1Room': boolean
+  '2Room': boolean
+  '3Room': boolean
+  '4Room': boolean
+}
+
 export interface AdvertsApiResponse {
   current_page: number
   data: Advert[]
