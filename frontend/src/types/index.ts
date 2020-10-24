@@ -4,9 +4,14 @@
  * @ Time: 19:19
  */
 
+import {
+  RESET_FILTERS,
+  SET_ADVERTS_DATA,
+  SET_ADVERTS_FILTERS,
+} from '@/redux/actions/adverts'
+
 import Advert from '@/models/advert'
 import { RootState } from '@/redux/rootReducer'
-import { SET_ADVERTS_DATA } from '@/redux/actions/adverts'
 import { ThunkAction } from 'redux-thunk'
 
 export interface PaginationLinks {
@@ -15,7 +20,7 @@ export interface PaginationLinks {
   active: boolean
 }
 
-export interface AdvertsFilter {
+export interface AdvertsFilterValues {
   priceRange: number[]
   '1Room': boolean
   '2Room': boolean
@@ -42,11 +47,29 @@ export interface AdvertsApiResponse {
 export interface AdvertsState {
   advertsData: AdvertsApiResponse | null
   adverts: Advert[] | null
+  filters: FiltersState
+}
+
+export interface FiltersState {
+  rooms: number[] | null
+  price: number[] | null
 }
 
 export interface SetAdvertsAction {
   type: typeof SET_ADVERTS_DATA
   advertsData: AdvertsApiResponse
+}
+
+export interface SetAdvertsFiltersAction {
+  type: typeof SET_ADVERTS_FILTERS
+  filters: {
+    rooms: number[]
+    price: number[]
+  }
+}
+
+export interface ResetFiltersAction {
+  type: typeof RESET_FILTERS
 }
 
 export type SetAdvertsThunkAction = ThunkAction<
@@ -56,4 +79,21 @@ export type SetAdvertsThunkAction = ThunkAction<
   SetAdvertsAction
 >
 
-export type AdvertsActionTypes = SetAdvertsAction
+export type SetAdvertsFiltersThunkAction = ThunkAction<
+  void,
+  RootState,
+  unknown,
+  SetAdvertsFiltersAction
+>
+
+export type ResetFiltersThunkAction = ThunkAction<
+  void,
+  RootState,
+  unknown,
+  ResetFiltersAction
+>
+
+export type AdvertsActionTypes =
+  | SetAdvertsAction
+  | SetAdvertsFiltersAction
+  | ResetFiltersAction

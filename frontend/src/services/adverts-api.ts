@@ -4,8 +4,9 @@
  * @ Time: 16:55
  */
 
+import { AdvertsApiResponse, FiltersState } from '@/types'
+
 import Advert from '@/models/advert'
-import { AdvertsApiResponse } from '@/types'
 import { CancelToken } from 'axios'
 import HttpClient from './http-client'
 
@@ -14,11 +15,17 @@ class AdvertsApi extends HttpClient {
     super(process.env.REACT_APP_API_URL ?? '')
   }
 
-  public getAdverts = (page?: number, cancelToken?: CancelToken) =>
+  public getAdverts = (
+    page?: number,
+    filters?: FiltersState,
+    cancelToken?: CancelToken
+  ) =>
     this.instance.get<AdvertsApiResponse>('/adverts', {
       cancelToken,
       params: {
         page,
+        rooms: filters?.rooms ? filters?.rooms.join(',') : '',
+        price: filters?.price ? filters?.price.join(',') : '',
       },
     })
 

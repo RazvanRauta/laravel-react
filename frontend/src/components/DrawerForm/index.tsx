@@ -4,43 +4,40 @@
  *  Time: 18:15
  */
 
-import React from 'react'
-import { Formik, Form, FormikProps, FormikHelpers } from 'formik'
-import { FormGroup, LinearProgress } from '@material-ui/core'
+import { Form, Formik, FormikProps } from 'formik'
+
+import { AdvertsFilterValues } from '@/types'
+import { FormGroup } from '@material-ui/core'
 import PriceRangeSlider from '../PriceRangeSlider'
-import { AdvertsFilter } from '@/types'
+import React from 'react'
 import RoomsCheckBox from '../RoomsCheckBox'
+import { RootState } from '@/redux/rootReducer'
+import { useSelector } from 'react-redux'
 
 interface DrawerFormProps {
   bindFiltersForm: any
+  handleFormSubmit: (values: AdvertsFilterValues) => Promise<void>
 }
 
-const DrawerForm: React.FC<DrawerFormProps> = ({ bindFiltersForm }) => {
-  const handleSubmit = (
-    values: AdvertsFilter,
-    helpers: FormikHelpers<AdvertsFilter>
-  ) => {
-    const { setSubmitting } = helpers
-    try {
-      console.log({ values })
-
-      setSubmitting(false)
-    } catch (e) {}
-  }
+const DrawerForm: React.FC<DrawerFormProps> = ({
+  bindFiltersForm,
+  handleFormSubmit,
+}) => {
+  const filters = useSelector((state: RootState) => state.advertsData.filters)
 
   return (
     <Formik
       initialValues={{
-        priceRange: [50, 1000],
-        '1Room': false,
-        '2Room': false,
-        '3Room': false,
-        '4Room': false,
+        priceRange: filters?.price ? filters?.price : [50, 1000],
+        '1Room': filters?.rooms ? filters?.rooms.indexOf(1) > -1 : false,
+        '2Room': filters?.rooms ? filters?.rooms.indexOf(2) > -1 : false,
+        '3Room': filters?.rooms ? filters?.rooms.indexOf(3) > -1 : false,
+        '4Room': filters?.rooms ? filters?.rooms.indexOf(4) > -1 : false,
       }}
-      onSubmit={handleSubmit}
+      onSubmit={handleFormSubmit}
     >
-      {(props: FormikProps<AdvertsFilter>) => {
-        const { handleBlur, isSubmitting, submitForm, values } = props
+      {(props: FormikProps<AdvertsFilterValues>) => {
+        const { handleBlur, submitForm, values } = props
         bindFiltersForm(submitForm, values)
         return (
           <Form>
@@ -74,7 +71,6 @@ const DrawerForm: React.FC<DrawerFormProps> = ({ bindFiltersForm }) => {
                 onBlur={handleBlur}
               />
             </FormGroup>
-            {isSubmitting && <LinearProgress />}
           </Form>
         )
       }}

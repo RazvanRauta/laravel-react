@@ -5,13 +5,21 @@
  */
 
 import { AdvertsActionTypes, AdvertsState } from '@/types'
+import {
+  RESET_FILTERS,
+  SET_ADVERTS_DATA,
+  SET_ADVERTS_FILTERS,
+} from '../actions/adverts'
 
 import Advert from '@/models/advert'
-import { SET_ADVERTS_DATA } from '../actions/adverts'
 
 const initialState: AdvertsState = {
   advertsData: null,
   adverts: null,
+  filters: {
+    price: null,
+    rooms: null,
+  },
 }
 
 export default (
@@ -26,8 +34,24 @@ export default (
       advertsDatum.forEach((ad) => listOfAds.push(new Advert({ ...ad })))
 
       return {
+        ...state,
         advertsData: action.advertsData,
         adverts: [...listOfAds],
+      }
+
+    case SET_ADVERTS_FILTERS:
+      return {
+        ...state,
+        filters: action.filters,
+      }
+
+    case RESET_FILTERS:
+      return {
+        ...state,
+        filters: {
+          price: null,
+          rooms: null,
+        },
       }
 
     default:

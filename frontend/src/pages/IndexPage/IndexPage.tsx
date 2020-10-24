@@ -6,25 +6,28 @@
 
 import * as advertsActions from '@/redux/actions/adverts'
 
-import { Box, Fab, Grid, SwipeableDrawer } from '@material-ui/core'
+import { AdvertsFilterValues, FiltersState } from '@/types'
+import { Box, Fab, Grid, Snackbar, SwipeableDrawer } from '@material-ui/core'
 import React, { Fragment, useEffect, useState } from 'react'
 import axios, { CancelToken } from 'axios'
 import { useDispatch, useSelector } from 'react-redux'
 import { useHistory, useRouteMatch } from 'react-router-dom'
 
 import AdvertCard from '@/components/AdvertCard'
+import { Alert } from '@material-ui/lab'
+import DrawerContent from '@/components/DrawerContent'
 import { FilterList } from '@material-ui/icons'
 import Loader from '@/components/Loader'
 import { NOT_FOUND_ROUTE } from '@/routes'
 import Pagination from '@material-ui/lab/Pagination'
 import { RootState } from '@/redux/rootReducer'
+import { parseFilters } from '@/utils'
 import useStyles from './styles'
-import DrawerContent from '@/components/DrawerContent'
-import { AdvertsFilter } from '@/types'
 
 const IndexPage: React.FC = () => {
   const [loading, setLoading] = useState(false)
   const [open, setOpened] = useState(false)
+  const [error, setError] = useState(null)
   const classes = useStyles()
   const match = useRouteMatch()
   const history = useHistory()
@@ -35,12 +38,13 @@ const IndexPage: React.FC = () => {
   )
 
   const adverts = useSelector((state: RootState) => state.advertsData.adverts)
+  const filters = useSelector((state: RootState) => state.advertsData.filters)
   const last_page = advertsData?.last_page ?? 1
   const current_page = advertsData?.current_page
 
   let filterForm: any = null
 
-  const handleSubmitFiltersForm = async (e: any) => {
+  const handleFiltersForm = async (e: any) => {
     if (filterForm) {
       await filterForm.submitForm(e)
     }
@@ -51,10 +55,30 @@ const IndexPage: React.FC = () => {
     filterForm = { submitForm }
   }
 
-  const getData = async (page?: number, cancelToken?: CancelToken) => {
+  const handleSubmit = async (values: AdvertsFilterValues) => {
     setLoading(true)
     try {
-      await dispatch(advertsActions.fetchAdverts(page, cancelToken))
+      const filters = parseFilters(values)
+      await dispatch(advertsActions.setFilters(values))
+      await dispatch(advertsActions.fetchAdverts(1, filters))
+      window.history.pushState({}, ' 1', `/page/1`)
+    } catch (error) {
+      setError(error)
+      await dispatch(advertsActions.resetFilters())
+      console.log(error)
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  const getData = async (
+    page?: number,
+    filters?: FiltersState,
+    cancelToken?: CancelToken
+  ) => {
+    setLoading(true)
+    try {
+      await dispatch(advertsActions.fetchAdverts(page, filters, cancelToken))
       setLoading(false)
     } catch (err) {
       console.log(err)
@@ -68,7 +92,7 @@ const IndexPage: React.FC = () => {
     //@ts-ignore
     const { id } = match.params
 
-    getData(id, source.token)
+    getData(id, filters, source.token)
 
     return () => {
       source.cancel()
@@ -77,7 +101,7 @@ const IndexPage: React.FC = () => {
   }, [])
 
   const handlePageChange = (_: any, page: number) => {
-    getData(page)
+    getData(page, filters)
     window.history.pushState({}, `Page ${page}`, `/page/${page}`)
   }
 
@@ -94,10 +118,18 @@ const IndexPage: React.FC = () => {
     }
 
     if (!open) {
-      await handleSubmitFiltersForm(event)
+      await handleFiltersForm(event)
     }
 
     setOpened(open)
+  }
+
+  const handleCloseAlert = (event?: React.SyntheticEvent, reason?: string) => {
+    if (reason === 'clickaway') {
+      return
+    }
+
+    setError(null)
   }
 
   return (
@@ -143,8 +175,20 @@ const IndexPage: React.FC = () => {
             onClose={toggleDrawer(false)}
             onOpen={toggleDrawer(true)}
           >
-            <DrawerContent bindFiltersForm={bindSubmitForm} />
+            <DrawerContent
+              bindFiltersForm={bindSubmitForm}
+              handleSubmit={handleSubmit}
+            />
           </SwipeableDrawer>
+          <Snackbar
+            open={!!error}
+            autoHideDuration={6000}
+            onClose={handleCloseAlert}
+          >
+            <Alert onClose={handleCloseAlert} severity="error">
+              {`${error}`}
+            </Alert>
+          </Snackbar>
         </Fragment>
       ) : (
         <Loader />

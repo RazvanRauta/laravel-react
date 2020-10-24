@@ -4,9 +4,10 @@
  *  Time: 19:16
  */
 
-import { FormControlLabel, Checkbox } from '@material-ui/core'
-import { useField } from 'formik'
+import { Checkbox, FormControlLabel } from '@material-ui/core'
+
 import React from 'react'
+import { useField } from 'formik'
 
 interface CheckBoxProps {
   onBlur: (event: React.FocusEvent<HTMLSpanElement>) => void

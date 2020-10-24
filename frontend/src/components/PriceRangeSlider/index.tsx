@@ -4,9 +4,10 @@
  *  Time: 18:35
  */
 
+import { Slider, Typography } from '@material-ui/core'
+
 import React from 'react'
 import { makeStyles } from '@material-ui/core/styles'
-import { Typography, Slider } from '@material-ui/core'
 import { useField } from 'formik'
 
 interface PriceRangeProps {
@@ -42,7 +43,7 @@ const PriceRangeSlider: React.FC<PriceRangeProps> = ({ name, id, label }) => {
         onChange={handleChange}
         name={field.name}
         color="secondary"
-        valueLabelDisplay="auto"
+        valueLabelDisplay="on"
         aria-labelledby={id}
         min={10}
         step={10}

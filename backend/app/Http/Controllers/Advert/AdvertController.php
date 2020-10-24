@@ -6,6 +6,7 @@ use App\Http\Controllers\ApiController;
 use App\Models\Advert;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class AdvertController extends ApiController
 {
@@ -22,12 +23,26 @@ class AdvertController extends ApiController
      * )
      * Display a listing of the resource.
      *
+     * @param Request $request
      * @return JsonResponse
      */
-    public function index(): JsonResponse
+    public function index(Request $request): JsonResponse
     {
-        $adverts = Advert::paginate(6);
-        return count($adverts) > 0 ?
+
+        $rooms = $request->query('rooms') ? explode(',',$request->query('rooms') ): null;
+        $price = $request->query('price') ? explode(',',$request->query('price') ): null;
+
+        $adverts = DB::table('adverts')
+            ->when($rooms, function($query) use ($rooms){
+                return $query->whereIn('rooms',$rooms);
+            })
+
+            ->when($price, function($query) use ($price){
+                return $query->orWhereBetween('rooms',$price);
+            })
+            ->paginate(6);
+
+        return $adverts->total() > 0 ?
             $this->successResponse($adverts) :
             $this->errorResponse('No adverts were found', 404);
     }
