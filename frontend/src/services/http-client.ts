@@ -16,6 +16,7 @@ abstract class HttpClient {
   public constructor(baseURL: string) {
     this.instance = axios.create({
       baseURL,
+      withCredentials: true,
     })
 
     this._initializeResponseInterceptor()

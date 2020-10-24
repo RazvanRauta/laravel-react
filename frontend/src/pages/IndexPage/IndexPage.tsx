@@ -11,26 +11,24 @@ import { Box, Fab, Grid, Snackbar, SwipeableDrawer } from '@material-ui/core'
 import React, { Fragment, useEffect, useState } from 'react'
 import axios, { CancelToken } from 'axios'
 import { useDispatch, useSelector } from 'react-redux'
-import { useHistory, useRouteMatch } from 'react-router-dom'
 
 import AdvertCard from '@/components/AdvertCard'
 import { Alert } from '@material-ui/lab'
 import DrawerContent from '@/components/DrawerContent'
 import { FilterList } from '@material-ui/icons'
 import Loader from '@/components/Loader'
-import { NOT_FOUND_ROUTE } from '@/routes'
 import Pagination from '@material-ui/lab/Pagination'
 import { RootState } from '@/redux/rootReducer'
 import { parseFilters } from '@/utils'
+import { useRouteMatch } from 'react-router-dom'
 import useStyles from './styles'
 
 const IndexPage: React.FC = () => {
   const [loading, setLoading] = useState(false)
   const [open, setOpened] = useState(false)
-  const [error, setError] = useState(null)
+  const [error, setError] = useState<null | string>(null)
   const classes = useStyles()
   const match = useRouteMatch()
-  const history = useHistory()
   const dispatch = useDispatch()
 
   const advertsData = useSelector(
@@ -81,8 +79,9 @@ const IndexPage: React.FC = () => {
       await dispatch(advertsActions.fetchAdverts(page, filters, cancelToken))
       setLoading(false)
     } catch (err) {
-      console.log(err)
-      history.push(NOT_FOUND_ROUTE)
+      setError(error ?? 'Snap! There was an error!')
+      await dispatch(advertsActions.resetFilters())
+      console.log(error)
     }
   }
 
@@ -139,7 +138,7 @@ const IndexPage: React.FC = () => {
       alignContent="center"
       justifyContent="space-between"
     >
-      {!loading ? (
+      {!loading && adverts && adverts?.length > 0 ? (
         <Fragment>
           <Grid container alignItems="stretch" spacing={3} justify="center">
             {adverts &&
@@ -180,19 +179,19 @@ const IndexPage: React.FC = () => {
               handleSubmit={handleSubmit}
             />
           </SwipeableDrawer>
-          <Snackbar
-            open={!!error}
-            autoHideDuration={6000}
-            onClose={handleCloseAlert}
-          >
-            <Alert onClose={handleCloseAlert} severity="error">
-              {`${error}`}
-            </Alert>
-          </Snackbar>
         </Fragment>
       ) : (
         <Loader />
       )}
+      <Snackbar
+        open={!!error}
+        autoHideDuration={6000}
+        onClose={handleCloseAlert}
+      >
+        <Alert onClose={handleCloseAlert} severity="error">
+          {`${error}`}
+        </Alert>
+      </Snackbar>
     </Box>
   )
 }

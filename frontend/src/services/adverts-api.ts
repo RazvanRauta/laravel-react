@@ -20,17 +20,17 @@ class AdvertsApi extends HttpClient {
     filters?: FiltersState,
     cancelToken?: CancelToken
   ) =>
-    this.instance.get<AdvertsApiResponse>('/adverts', {
+    this.instance.get<AdvertsApiResponse>('/api/adverts', {
       cancelToken,
       params: {
         page,
-        rooms: filters?.rooms ? filters?.rooms.join(',') : '',
-        price: filters?.price ? filters?.price.join(',') : '',
+        rooms: filters?.rooms ? filters?.rooms.join(',') : null,
+        price: filters?.price ? filters?.price.join(',') : null,
       },
     })
 
   public getAdvert = (id: number, cancelToken?: CancelToken) =>
-    this.instance.get<Advert>(`/adverts/${id}`, {
+    this.instance.get<Advert>(`/api/adverts/${id}`, {
       cancelToken,
     })
 }

@@ -15,9 +15,9 @@ import {
   Divider,
   Typography,
 } from '@material-ui/core'
-import { Link, useHistory } from 'react-router-dom'
 
 import Advert from '@/models/advert'
+import { Link } from 'react-router-dom'
 import React from 'react'
 import { format } from 'date-fns'
 import useStyles from './styles'

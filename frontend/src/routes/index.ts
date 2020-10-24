@@ -22,6 +22,9 @@ export const routes = [
   { path: PAGE_ID_ROUTE, component: IndexPage },
   { path: ADVERT_ID_ROUTE, component: AdvertPage },
   { path: SIGN_IN_ROUTE, component: SignInPage },
-  { path: SETTINGS_ROUTE, component: SettingsPage },
   { path: NOT_FOUND_ROUTE, component: NotFoundPage },
+]
+
+export const protectedRoutes = [
+  { path: SETTINGS_ROUTE, component: SettingsPage },
 ]

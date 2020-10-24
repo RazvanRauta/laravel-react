@@ -18,7 +18,11 @@ use Illuminate\Support\Facades\Route;
 
 Route::post('/login', [AuthController::class, 'login']);
 Route::get('/login', function () {
-    return response()->json(['You have to login']);
+    return response()->json([
+        'status' => 'Error',
+        'message' => 'You are not logged in',
+        'data' => null
+    ],401);
 })->name('login');
 
 Route::get('/adverts', [AdvertController::class, 'index']);
@@ -26,6 +30,7 @@ Route::get('/adverts/{id}', [AdvertController::class, 'show']);
 
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/users', [UserController::class, 'index']);
+    Route::get('/currentUser', [UserController::class,'current']);
 
     Route::post('/adverts', [AdvertController::class, 'store']);
     Route::put('/adverts/{id}', [AdvertController::class, 'update']);
