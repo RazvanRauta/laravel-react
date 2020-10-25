@@ -16,13 +16,15 @@ class CreateAdvertsTable extends Migration
         Schema::create('adverts', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->string('description');
-            $table->string('price');
+            $table->text('description')->nullable();
+            $table->integer('price');
+            $table->string('priceType');
             $table->dateTime('postedDate');
             $table->string('advertUrl');
-            $table->string('imageUrl');
-            $table->integer('rooms');
-            $table->string('advertId')->unique();
+            $table->string('size')->nullable();
+            $table->string('floor')->nullable();
+            $table->integer('rooms')->nullable();
+            $table->string('advertId');
             $table->timestamps();
         });
     }

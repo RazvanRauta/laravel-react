@@ -4,27 +4,23 @@
  * @ Time: 19:19
  */
 
-import { REMOVE_TOKEN, SET_TOKEN } from '@/redux/actions/auth'
-import { REMOVE_USER, SET_USER } from '@/redux/actions/user'
-import {
-  RESET_FILTERS,
-  SET_ADVERTS_DATA,
-  SET_ADVERTS_FILTERS,
-} from '@/redux/actions/adverts'
+import {REMOVE_TOKEN, SET_TOKEN} from '@/redux/actions/auth'
+import {REMOVE_USER, SET_USER} from '@/redux/actions/user'
+import {RESET_FILTERS, SET_ADVERTS_DATA, SET_ADVERTS_FILTERS,} from '@/redux/actions/adverts'
 
 import Advert from '@/models/advert'
-import { RootState } from '@/redux/rootReducer'
-import { ThunkAction } from 'redux-thunk'
+import {RootState} from '@/redux/rootReducer'
+import {ThunkAction} from 'redux-thunk'
 import User from '@/models/user'
 
 export interface PaginationLinks {
-  url: string
-  label: any
-  active: boolean
+    url: string
+    label: any
+    active: boolean
 }
 
 export interface AdvertsFilterValues {
-  priceRange: number[]
+    priceRange: number[]
   '1Room': boolean
   '2Room': boolean
   '3Room': boolean
@@ -37,25 +33,34 @@ export interface AdvertsApiResponse {
   first_page_url: string
   from: number
   last_page: number
-  last_page_url: string
-  links: PaginationLinks[]
-  next_page_url: string
-  path: string
-  per_page: number
-  prev_page_url?: any
-  to: number
-  total: number
+    last_page_url: string
+    links: PaginationLinks[]
+    next_page_url: string
+    path: string
+    per_page: number
+    prev_page_url?: any
+    to: number
+    total: number
+}
+
+export interface AdvertImage {
+    id: number;
+    created_at: Date;
+    updated_at: Date;
+    advert_id: number;
+    imageUrl: string;
 }
 
 export interface LoginApiResponse {
-  access_token: string
-  token_type: string
+    access_token: string
+    token_type: string
 }
+
 export interface CurrentUserResponse {
-  id: number
-  name: string
-  email: string
-  email_verified_at?: any
+    id: number
+    name: string
+    email: string
+    email_verified_at?: any
   created_at?: any
   updated_at?: any
 }

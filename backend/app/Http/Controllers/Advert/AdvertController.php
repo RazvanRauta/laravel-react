@@ -6,7 +6,6 @@ use App\Http\Controllers\ApiController;
 use App\Models\Advert;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
 class AdvertController extends ApiController
 {
@@ -32,13 +31,12 @@ class AdvertController extends ApiController
         $rooms = $request->query('rooms') ? explode(',',$request->query('rooms') ): null;
         $price = $request->query('price') ? explode(',',$request->query('price') ): null;
 
-        $adverts = DB::table('adverts')
-            ->when($rooms, function($query) use ($rooms){
-                return $query->whereIn('rooms',$rooms);
+        $adverts = Advert::with('images')
+            ->when($rooms, function ($query) use ($rooms) {
+                return $query->whereIn('rooms', $rooms);
             })
-
-            ->when($price, function($query) use ($price){
-                return $query->orWhereBetween('rooms',$price);
+            ->when($price, function ($query) use ($price) {
+                return $query->orWhereBetween('price', $price);
             })
             ->paginate(6);
 
