@@ -15,6 +15,8 @@ import { NOT_FOUND_ROUTE } from '@/routes'
 const AdvertPage: React.FC = () => {
   const [adv, setAdv] = useState<Advert>()
   const [loading, setLoading] = useState<boolean>(false)
+  
+  console.log({adv,loading})
 
   const match = useRouteMatch()
   const history = useHistory()
