@@ -13,6 +13,7 @@ RUN curl -sL https://deb.nodesource.com/setup_12.x | bash
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
     git \
+    cron \
     vim \
     libmemcached-dev \
     libz-dev \
@@ -48,14 +49,16 @@ COPY . /app
 
 RUN composer install
 
+RUN chmod u+x /app/entrypoint.sh
+
 COPY ./laravel.ini /usr/local/etc/php/conf.d/laravel.ini
 
-CMD php artisan migrate --force
+ADD schedule/crontab /etc/cron.d/cron
 
-CMD php artisan db:seed
-
-CMD php artisan ket:generate
+RUN chmod 0644 /etc/cron.d/cron
 
 EXPOSE 9000
+
+ENTRYPOINT ["/app/entrypoint.sh"]
 
 CMD ["php-fpm"]

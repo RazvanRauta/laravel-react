@@ -1,15 +1,18 @@
 FROM node:12-alpine as builder
 
+RUN apk add --no-cache yarn
+
 WORKDIR /app
 
 COPY package.json /app/package.json
 
-RUN npm install
+COPY yarn.lock /app/yarn.lock
+
+RUN yarn install
 
 COPY . /app
 
-RUN npm run build
-
+RUN yarn build
 
 FROM nginx:1.19.0-alpine
 
