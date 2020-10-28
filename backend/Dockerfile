@@ -43,13 +43,21 @@ RUN apt-get update \
 # Install composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
+RUN mkdir -p /app/
+
+RUN groupadd -g 1000 www
+
+RUN useradd -u 1000 -ms /bin/bash -g www www
+
+COPY ./ /app
+
+COPY --chown=www:www . /app
+
 WORKDIR /app
 
-COPY . /app
+RUN chmod +x /app/entrypoint.sh
 
-RUN composer install
-
-RUN chmod u+x /app/entrypoint.sh
+RUN chmod +x /app/artisan
 
 COPY ./laravel.ini /usr/local/etc/php/conf.d/laravel.ini
 
@@ -57,8 +65,8 @@ ADD schedule/crontab /etc/cron.d/cron
 
 RUN chmod 0644 /etc/cron.d/cron
 
+USER www
+
 EXPOSE 9000
 
 ENTRYPOINT ["/app/entrypoint.sh"]
-
-CMD ["php-fpm"]

@@ -15,9 +15,9 @@ services:
       DB_DRIVER: mysql
       DB_HOST: mysql
       DB_PORT: 3306
-      DB_DATABASE: ${MYSQL_DATABASE}
+      DB_DATABASE: laravel
       DB_USERNAME: root
-      DB_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      DB_PASSWORD: password
     networks:
       - app_network
     container_name: backend
@@ -61,15 +61,17 @@ services:
     environment:
        SERVICE_NAME: frontend
        REACT_APP_API_URL: '/api'
+       NODE_OPTIONS: "--max-old-space-size=700"
+       NODE_ENV: production
     tty: true
 
   mysql:
     image: mysql:5
     environment:
-      MYSQL_DATABASE: ${MYSQL_DATABASE}
-      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: laravel
+      MYSQL_ROOT_PASSWORD: password
       MYSQL_USER: root
-      MYSQL_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_PASSWORD: password
     networks:
       - app_network
     ports:
@@ -91,9 +93,14 @@ services:
       - app_network
 
 networks:
+  default:
+    external:
+        name: app_network
   app_network:
+    name: app_network
     driver: bridge
 
 volumes:
   dbdata:
     driver: local
+    name: dbdata
