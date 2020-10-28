@@ -13,9 +13,5 @@ php artisan config:cache
 
 php artisan route:cache
 
-exec /usr/bin/supervisord -n -c /etc/supervisord.conf
-/usr/local/bin/docker-php-ext-configure sockets
-/usr/local/bin/docker-php-ext-install sockets
-supervisorctl restart
+cron -f & docker-php-entrypoint php-fpm
 
-exec "$@"

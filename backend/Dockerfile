@@ -57,13 +57,9 @@ COPY ./laravel.ini /usr/local/etc/php/conf.d/laravel.ini
 
 ADD ./schedule/crontab /etc/cron.d/crontab
 
-ADD ./schedule/crond.conf /etc/supervisor/conf.d/crond.conf
-
 RUN chmod 0644 /etc/cron.d/crontab
 
 RUN crontab /etc/cron.d/crontab
-
-RUN touch /var/log/cron.log
 
 EXPOSE 9000
 
