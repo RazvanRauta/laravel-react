@@ -13,4 +13,6 @@ php artisan config:cache
 
 php artisan route:cache
 
+cron -f
+
 exec "php-fpm"
