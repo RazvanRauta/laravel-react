@@ -10,6 +10,8 @@ services:
       SERVICE_NAME: backend
       APP_ENV: production
       APP_DEBUG: 'false'
+      APP_NAME: 'Laravel'
+      APP_KEY: 'base64:osP+rj0jwlWC8Bf4LM2deuj8ObvMIixks1h4C9QfPgg='
       APP_LOG_LEVEL: 'error'
       DB_CONNECTION: mysql
       DB_DRIVER: mysql

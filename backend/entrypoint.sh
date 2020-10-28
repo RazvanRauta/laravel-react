@@ -14,4 +14,3 @@ php artisan config:cache
 php artisan route:cache
 
 cron -f & docker-php-entrypoint php-fpm
-
