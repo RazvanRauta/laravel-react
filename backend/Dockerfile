@@ -45,13 +45,7 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 
 RUN mkdir -p /app/
 
-RUN groupadd -g 1000 www
-
-RUN useradd -u 1000 -ms /bin/bash -g www www
-
 COPY ./ /app
-
-COPY --chown=www:www . /app
 
 WORKDIR /app
 
@@ -61,11 +55,15 @@ RUN chmod +x /app/artisan
 
 COPY ./laravel.ini /usr/local/etc/php/conf.d/laravel.ini
 
-ADD schedule/crontab /etc/cron.d/cron
+ADD ./schedule/crontab /etc/cron.d/crontab
 
-RUN chmod 0644 /etc/cron.d/cron
+ADD ./schedule/crond.conf /etc/supervisor/conf.d/crond.conf
 
-USER www
+RUN chmod 0644 /etc/cron.d/crontab
+
+RUN crontab /etc/cron.d/crontab
+
+RUN touch /var/log/cron.log
 
 EXPOSE 9000
 
