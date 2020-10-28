@@ -49,6 +49,10 @@ COPY ./ /app
 
 WORKDIR /app
 
+RUN chmod 755 -R /app/
+
+RUN chmod -R o+w /app/storage
+
 RUN chmod +x /app/entrypoint.sh
 
 RUN chmod +x /app/artisan
