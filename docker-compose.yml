@@ -67,6 +67,8 @@ services:
        NODE_OPTIONS: "--max-old-space-size=700"
        NODE_ENV: production
     tty: true
+    volumes: 
+     - /home/razvan/certs:/etc/nginx/certs
 
   mysql:
     image: mysql:5
