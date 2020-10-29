@@ -4,8 +4,6 @@ services:
   backend:
     build:
       context: ./backend/.
-      args:
-        - CRONLOG=/var/log/laravel-scheduler.log
     depends_on:
       - mysql
     environment:
@@ -22,7 +20,6 @@ services:
       DB_DATABASE: laravel
       DB_USERNAME: root
       DB_PASSWORD: password
-      CRONLOG: '/var/log/laravel-scheduler.log'
     networks:
       - app_network
     container_name: backend

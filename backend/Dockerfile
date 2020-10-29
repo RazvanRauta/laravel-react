@@ -2,8 +2,6 @@ FROM php:7.4-fpm
 
 ENV DOCKERIZE_VERSION 0.6.1
 
-ARG CRONLOG
-
 # Install dockerize so we can wait for containers to be ready
 RUN curl -s -f -L -o /tmp/dockerize.tar.gz https://github.com/jwilder/dockerize/releases/download/v$DOCKERIZE_VERSION/dockerize-linux-amd64-v$DOCKERIZE_VERSION.tar.gz \
     && tar -C /usr/local/bin -xzvf /tmp/dockerize.tar.gz \
@@ -60,10 +58,6 @@ RUN chmod -R 777 /app/public
 RUN chmod +x /app/entrypoint.sh
 
 RUN chmod +x /app/artisan
-
-RUN touch ${CRONLOG}
-
-RUN chmod 777 ${CRONLOG}
 
 COPY ./laravel.ini /usr/local/etc/php/conf.d/laravel.ini
 

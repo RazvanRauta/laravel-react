@@ -28,8 +28,8 @@ class AdvertController extends ApiController
     public function index(Request $request): JsonResponse
     {
 
-        $rooms = $request->query('rooms') ? explode(',',$request->query('rooms') ): null;
-        $price = $request->query('price') ? explode(',',$request->query('price') ): null;
+        $rooms = $request->query('rooms') ? explode(',', $request->query('rooms')) : null;
+        $price = $request->query('price') ? explode(',', $request->query('price')) : null;
 
         $adverts = Advert::with('images')
             ->when($rooms, function ($query) use ($rooms) {
@@ -41,8 +41,8 @@ class AdvertController extends ApiController
             ->paginate(6);
 
         return $adverts->total() > 0 ?
-            $this->successResponse($adverts) :
-            $this->errorResponse('No adverts were found', 404);
+        $this->successResponse($adverts) :
+        $this->errorResponse('No adverts were found', 404);
     }
 
     /**
@@ -64,12 +64,11 @@ class AdvertController extends ApiController
      */
     public function show($id): JsonResponse
     {
-        $advert = Advert::find($id);
+        $advert = Advert::with('images')->find($id);
         return $advert ?
-            $this->successResponse($advert) :
-            $this->errorResponse("No advert was found with id: $id", 404);
+        $this->successResponse($advert) :
+        $this->errorResponse("No advert was found with id: $id", 404);
     }
-
 
     /**
      * Update the specified resource in storage.

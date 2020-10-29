@@ -25,9 +25,8 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $fileCronlog = env('CRONLOG');
 
-        $schedule->command('rr:parse-web-page')->everyTenMinutes()->appendOutputTo($fileCronlog);
+        $schedule->command('rr:parse-web-page')->everyTenMinutes();
     }
 
     /**
