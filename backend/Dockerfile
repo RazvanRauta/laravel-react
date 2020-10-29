@@ -49,9 +49,11 @@ COPY ./ /app
 
 WORKDIR /app
 
-RUN chmod 755 -R /app/
+RUN chown -R www-data:www-data /app
 
-RUN chmod -R o+w /app/storage
+RUN chmod -R 755 /app/storage
+
+RUN chmod -R 777 /app/public
 
 RUN chmod +x /app/entrypoint.sh
 
