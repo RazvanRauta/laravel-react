@@ -5,7 +5,7 @@ services:
     build:
       context: ./backend/.
       args:
-        - CRONLOG='/var/log/laravel-scheduler.log'
+        - CRONLOG=/var/log/laravel-scheduler.log
     depends_on:
       - mysql
     environment:
