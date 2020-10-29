@@ -4,10 +4,10 @@
  *  Time: 18:15
  */
 
+import { Box, Button, FormGroup } from '@material-ui/core'
 import { Form, Formik, FormikProps } from 'formik'
 
 import { AdvertsFilterValues } from '@/types'
-import { FormGroup } from '@material-ui/core'
 import PriceRangeSlider from '../PriceRangeSlider'
 import React from 'react'
 import RoomsCheckBox from '../RoomsCheckBox'
@@ -28,7 +28,7 @@ const DrawerForm: React.FC<DrawerFormProps> = ({
   return (
     <Formik
       initialValues={{
-        priceRange: filters?.price ? filters?.price : [50, 1000],
+        priceRange: filters?.price ? filters?.price : [50, 250],
         '1Room': filters?.rooms ? filters?.rooms.indexOf(1) > -1 : false,
         '2Room': filters?.rooms ? filters?.rooms.indexOf(2) > -1 : false,
         '3Room': filters?.rooms ? filters?.rooms.indexOf(3) > -1 : false,
@@ -37,7 +37,7 @@ const DrawerForm: React.FC<DrawerFormProps> = ({
       onSubmit={handleFormSubmit}
     >
       {(props: FormikProps<AdvertsFilterValues>) => {
-        const { handleBlur, submitForm, values } = props
+        const { handleBlur, submitForm, values, isSubmitting } = props
         bindFiltersForm(submitForm, values)
         return (
           <Form>
@@ -71,6 +71,16 @@ const DrawerForm: React.FC<DrawerFormProps> = ({
                 onBlur={handleBlur}
               />
             </FormGroup>
+            <Box marginTop={5}>
+              <Button
+                type="submit"
+                variant="contained"
+                color="secondary"
+                disabled={isSubmitting}
+              >
+                Submit
+              </Button>
+            </Box>
           </Form>
         )
       }}

@@ -17,6 +17,7 @@ const useStyles = makeStyles((theme) => ({
   },
   toolbarTitle: {
     textDecoration: 'none',
+    cursor: 'pointer',
   },
   button: {
     margin: '0 5px',

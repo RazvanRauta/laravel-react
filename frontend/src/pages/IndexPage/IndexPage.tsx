@@ -8,6 +8,7 @@ import * as advertsActions from '@/redux/actions/adverts'
 
 import { AdvertsFilterValues, FiltersState } from '@/types'
 import { Box, Fab, Grid, Snackbar, SwipeableDrawer } from '@material-ui/core'
+import { FilterList, RefreshOutlined } from '@material-ui/icons'
 import React, { Fragment, useEffect, useState } from 'react'
 import axios, { CancelToken } from 'axios'
 import { useDispatch, useSelector } from 'react-redux'
@@ -15,7 +16,6 @@ import { useDispatch, useSelector } from 'react-redux'
 import AdvertCard from '@/components/AdvertCard'
 import { Alert } from '@material-ui/lab'
 import DrawerContent from '@/components/DrawerContent'
-import { FilterList } from '@material-ui/icons'
 import Loader from '@/components/Loader'
 import Pagination from '@material-ui/lab/Pagination'
 import { RootState } from '@/redux/rootReducer'
@@ -55,6 +55,7 @@ const IndexPage: React.FC = () => {
 
   const handleSubmit = async (values: AdvertsFilterValues) => {
     setLoading(true)
+    if (open) setOpened(false)
     try {
       const filters = parseFilters(values)
       await dispatch(advertsActions.setFilters(values))
@@ -131,6 +132,11 @@ const IndexPage: React.FC = () => {
     setError(null)
   }
 
+  const handleReset = async () => {
+    await dispatch(advertsActions.resetFilters())
+    getData(1)
+  }
+
   return (
     <Box
       display="flex"
@@ -168,6 +174,17 @@ const IndexPage: React.FC = () => {
             <FilterList className={classes.extendedIcon} />
             Filter
           </Fab>
+          {filters && filters.price && filters.rooms && (
+            <Fab
+              variant="extended"
+              className={classes.fabReset}
+              color="default"
+              onClick={handleReset}
+            >
+              <RefreshOutlined className={classes.extendedIcon} />
+              Reset
+            </Fab>
+          )}
           <SwipeableDrawer
             anchor={'left'}
             open={open}

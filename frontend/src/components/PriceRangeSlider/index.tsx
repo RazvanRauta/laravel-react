@@ -4,7 +4,7 @@
  *  Time: 18:35
  */
 
-import { Slider, Typography } from '@material-ui/core'
+import { Box, Slider, Typography } from '@material-ui/core'
 
 import React from 'react'
 import { makeStyles } from '@material-ui/core/styles'
@@ -35,9 +35,11 @@ const PriceRangeSlider: React.FC<PriceRangeProps> = ({ name, id, label }) => {
 
   return (
     <div className={classes.root}>
-      <Typography id={id} gutterBottom>
-        {label}
-      </Typography>
+      <Box marginBottom={5}>
+        <Typography id={id} gutterBottom>
+          {label}
+        </Typography>
+      </Box>
       <Slider
         value={value}
         onChange={handleChange}
@@ -47,7 +49,7 @@ const PriceRangeSlider: React.FC<PriceRangeProps> = ({ name, id, label }) => {
         aria-labelledby={id}
         min={10}
         step={10}
-        max={2000}
+        max={500}
       />
     </div>
   )

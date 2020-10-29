@@ -18,6 +18,11 @@ const useStyles = makeStyles((theme) => ({
     bottom: theme.spacing(2),
     left: theme.spacing(2),
   },
+  fabReset: {
+    position: 'fixed',
+    bottom: theme.spacing(10),
+    left: theme.spacing(2),
+  },
   extendedIcon: {
     marginRight: 5,
   },

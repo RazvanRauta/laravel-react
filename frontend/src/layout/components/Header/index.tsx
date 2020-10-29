@@ -8,9 +8,9 @@ import * as authActions from '@/redux/actions/auth'
 import * as userActions from '@/redux/actions/user'
 
 import { Avatar, Box, Button, Toolbar, Typography } from '@material-ui/core'
-import { HOME_ROUTE, SETTINGS_ROUTE, SIGN_IN_ROUTE } from '@/routes'
 import { Link, useHistory } from 'react-router-dom'
 import React, { Fragment } from 'react'
+import { SETTINGS_ROUTE, SIGN_IN_ROUTE } from '@/routes'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { RootState } from '@/redux/rootReducer'
@@ -29,12 +29,16 @@ const Header: React.FC = () => {
     history.push(SIGN_IN_ROUTE)
   }
 
+  const handleReset = async () => {
+    history.push('/')
+    window.location.reload()
+  }
+
   return (
     <Fragment>
       <Toolbar className={classes.toolbar}>
         <Typography
-          component={Link}
-          to={HOME_ROUTE}
+          onClick={handleReset}
           variant="h5"
           color="inherit"
           align="center"

@@ -4,9 +4,9 @@
  * @ Time: 20:58
  */
 
-import { makeStyles } from '@material-ui/core/styles'
+import { Theme, makeStyles } from '@material-ui/core/styles'
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme: Theme) => ({
   root: {
     width: '100%',
     height: '100%',
@@ -32,6 +32,11 @@ const useStyles = makeStyles({
     margin: 0,
     padding: 0,
   },
-})
+  chip: {
+    [theme.breakpoints.down('md')]: {
+      fontSize: '11px',
+    },
+  },
+}))
 
 export default useStyles

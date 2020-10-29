@@ -4,19 +4,19 @@
  *  Time: 21:52
  */
 
+import { HOME_ROUTE, NOT_FOUND_ROUTE } from '@/routes'
 import React, { useEffect, useState } from 'react'
 import axios, { CancelToken } from 'axios'
 import { useHistory, useRouteMatch } from 'react-router-dom'
 
 import Advert from '@/models/advert'
+import AdvertView from '@/components/AdvertView'
 import AdvertsApi from '@/services/adverts-api'
-import { NOT_FOUND_ROUTE } from '@/routes'
+import Loader from '@/components/Loader'
 
 const AdvertPage: React.FC = () => {
   const [adv, setAdv] = useState<Advert>()
   const [loading, setLoading] = useState<boolean>(false)
-  
-  console.log({adv,loading})
 
   const match = useRouteMatch()
   const history = useHistory()
@@ -42,7 +42,7 @@ const AdvertPage: React.FC = () => {
     if (id) {
       fetchAdvData(parseInt(id), source.token)
     } else {
-      history.push(NOT_FOUND_ROUTE)
+      history.push(HOME_ROUTE)
     }
 
     return () => {
@@ -51,7 +51,7 @@ const AdvertPage: React.FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  return <div>AdvertPage Component</div>
+  return loading ? <Loader /> : adv ? <AdvertView {...adv} /> : null
 }
 
 export default AdvertPage
