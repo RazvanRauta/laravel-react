@@ -2,6 +2,8 @@ FROM php:7.4-fpm
 
 ENV DOCKERIZE_VERSION 0.6.1
 
+ARG CRONLOG
+
 # Install dockerize so we can wait for containers to be ready
 RUN curl -s -f -L -o /tmp/dockerize.tar.gz https://github.com/jwilder/dockerize/releases/download/v$DOCKERIZE_VERSION/dockerize-linux-amd64-v$DOCKERIZE_VERSION.tar.gz \
     && tar -C /usr/local/bin -xzvf /tmp/dockerize.tar.gz \
@@ -66,6 +68,8 @@ ADD ./schedule/crontab /etc/cron.d/crontab
 RUN chmod 0644 /etc/cron.d/crontab
 
 RUN crontab /etc/cron.d/crontab
+
+RUN ln -sf /proc/1/fd/1 ${CRONLOG}
 
 EXPOSE 9000
 
