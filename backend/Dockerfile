@@ -61,6 +61,10 @@ RUN chmod +x /app/entrypoint.sh
 
 RUN chmod +x /app/artisan
 
+RUN touch ${CRONLOG}
+
+RUN chmod 777 ${CRONLOG}
+
 COPY ./laravel.ini /usr/local/etc/php/conf.d/laravel.ini
 
 ADD ./schedule/crontab /etc/cron.d/crontab
