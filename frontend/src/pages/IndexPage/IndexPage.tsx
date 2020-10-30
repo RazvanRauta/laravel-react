@@ -80,9 +80,9 @@ const IndexPage: React.FC = () => {
       await dispatch(advertsActions.fetchAdverts(page, filters, cancelToken))
       setLoading(false)
     } catch (err) {
-      setError(error ?? 'Snap! There was an error!')
+      setError(err ?? 'Snap! There was an error!')
       await dispatch(advertsActions.resetFilters())
-      console.log(error)
+      console.log(err)
     }
   }
 

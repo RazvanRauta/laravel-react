@@ -5,6 +5,7 @@ namespace App\Console;
 use App\Console\Commands\ParseWebPage\ParseWebPage;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
+use Illuminate\Support\Facades\App;
 
 class Kernel extends ConsoleKernel
 {
@@ -26,7 +27,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         $fileLocation = '/var/log/laravel-scheduler.log';
-        if (env('APP_ENV') !== 'production') {
+        if (App::environment('local')) {
             $fileLocation = 'storage/logs/laravel.log';
         }
 
