@@ -97,6 +97,41 @@ services:
     networks:
       - app_network
 
+  logioweb:
+    hostname: air-logs
+    image: 'blacklabelops/logio:latest'
+    container_name: logioweb
+    environment:
+      - 'LOGIO_ADMIN_USER=razvan'
+      - 'LOGIO_ADMIN_PASSWORD=razvan'
+      - 'LOGIO_CERTIFICATE_DNAME=HTTPS'
+    ports:
+      - '28778:28778'
+    volumes:
+      - '/opt/server'
+      - /home/razvan/certs:/opt/server/keys
+    networks:
+      - app_network
+  
+  harvester:
+    image: 'blacklabelops/logio:latest'
+    container_name: harvester
+    environment:
+      - 'DELAYED_START=10'
+      - 'LOGIO_HARVESTER_NODENAME=DockerLogs'
+      - 'LOGIO_HARVESTER_STREAMNAME=UnifiedLogs'
+      - 'LOGIO_HARVESTER_LOGFILES='
+      - 'LOGS_DIRECTORIES=/var/lib/docker'
+      - 'LOG_FILE_PATTERN=*.log'
+    volumes:
+      - '/var/lib/docker:/var/lib/docker'
+    links:
+      - logioweb:logio
+    user: root
+    command: harvester
+    networks:
+      - app_network
+
 networks:
   default:
     external:

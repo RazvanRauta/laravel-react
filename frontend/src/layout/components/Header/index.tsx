@@ -63,6 +63,18 @@ const Header: React.FC = () => {
           {user && (
             <Button
               component={Link}
+              to="https://ama.rrazvan.dev:28778"
+              variant="outlined"
+              color="secondary"
+              size="small"
+              className={classes.button}
+            >
+              Live Logs
+            </Button>
+          )}
+          {user && (
+            <Button
+              component={Link}
               to={SETTINGS_ROUTE}
               variant="outlined"
               color="secondary"
