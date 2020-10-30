@@ -37,6 +37,8 @@ const AdvertView: React.FC<Advert> = ({
   size,
   title,
   postedDate,
+  city,
+  region,
 }) => {
   const classes = useStyles()
   const location = useLocation()
@@ -126,6 +128,22 @@ const AdvertView: React.FC<Advert> = ({
         <TableContainer component={Paper} className={classes.tableContainer}>
           <Table>
             <TableBody>
+              <TableRow>
+                <TableCell component="th" scope="row" colSpan={2}>
+                  Region
+                </TableCell>
+                <TableCell align="center" colSpan={2}>
+                  {region ?? 'Not Specified'}
+                </TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell component="th" scope="row" colSpan={2}>
+                  City
+                </TableCell>
+                <TableCell align="center" colSpan={2}>
+                  {city ?? 'Not Specified'}
+                </TableCell>
+              </TableRow>
               <TableRow>
                 <TableCell component="th" scope="row" colSpan={2}>
                   Price

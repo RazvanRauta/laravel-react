@@ -193,6 +193,16 @@ class Parser
 
                                 $advert->floor = $data[1] ?: '';
                             }
+
+                            if (!empty($data[0]) && strpos($data[0], 'Область') > -1) {
+
+                                $advert->region = $data[1] ?: '';
+                            }
+
+                            if (!empty($data[0]) && strpos($data[0], 'Населенный') > -1) {
+
+                                $advert->city = $data[1] ?: '';
+                            }
                         }
 
                     }

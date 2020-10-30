@@ -25,8 +25,12 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
+        $fileLocation = '/var/log/laravel-scheduler.log';
+        if (env('APP_ENV') !== 'production') {
+            $fileLocation = 'storage/logs/laravel.log';
+        }
 
-        $schedule->command('rr:parse-web-page')->everyTenMinutes()->appendOutputTo('/var/log/laravel-scheduler.log');
+        $schedule->command('rr:parse-web-page')->everyTenMinutes()->appendOutputTo($fileLocation);
     }
 
     /**

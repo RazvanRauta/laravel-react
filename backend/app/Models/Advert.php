@@ -46,6 +46,10 @@ use Illuminate\Support\Carbon;
  * @method static Builder|Advert whereFloor($value)
  * @property string $priceType
  * @method static Builder|Advert wherePriceType($value)
+ * @property string|null $region
+ * @property string|null $city
+ * @method static Builder|Advert whereCity($value)
+ * @method static Builder|Advert whereRegion($value)
  */
 class Advert extends Model
 {
