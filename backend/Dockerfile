@@ -67,7 +67,7 @@ RUN chmod 0644 /etc/cron.d/crontab
 
 RUN crontab /etc/cron.d/crontab
 
-RUN ln -sf /proc/1/fd/1 ${CRONLOG}
+RUN ln -sf /proc/1/fd/1 /var/log/laravel-scheduler.log
 
 EXPOSE 9000
 

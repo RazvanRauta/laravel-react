@@ -26,7 +26,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
 
-        $schedule->command('rr:parse-web-page')->everyTenMinutes();
+        $schedule->command('rr:parse-web-page')->everyTenMinutes()->appendOutputTo('/var/log/laravel-scheduler.log');
     }
 
     /**
