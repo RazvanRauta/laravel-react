@@ -20,6 +20,6 @@ class DatabaseSeeder extends Seeder
             'email' => 'test@testy.com',
             'password' => Hash::make('password')]);
 
-        $this->call(AdvertSeeder::class);
+        // $this->call(AdvertSeeder::class);
     }
 }
