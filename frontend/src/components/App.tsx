@@ -41,7 +41,6 @@ const App = () => {
           <CssBaseline />
           <Router>
             <Helmet>
-              <meta name="”robots”" content="noindex, nofollow" />
               <meta property="og:site_name" content="Amazing Real Estates" />
               <link rel="canonical" href="https://ama.rrazvan.dev" />
               <meta property="og:url" content="https://ama.rrazvan.dev" />
