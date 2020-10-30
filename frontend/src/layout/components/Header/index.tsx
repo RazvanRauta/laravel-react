@@ -63,7 +63,8 @@ const Header: React.FC = () => {
           {user && (
             <Button
               component={Link}
-              to="https://ama.rrazvan.dev:28778"
+              to={{ pathname: 'https://ama.rrazvan.dev:28778' }}
+              target="_blank"
               variant="outlined"
               color="secondary"
               size="small"
