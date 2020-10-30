@@ -107,6 +107,7 @@ services:
       - 'LOGIO_CERTIFICATE_DNAME=HTTPS'
     ports:
       - '28778:28778'
+    restart: unless-stopped
     volumes:
       - '/opt/server'
       - /home/razvan/certs:/opt/server/keys
@@ -129,6 +130,7 @@ services:
       - logioweb:logio
     user: root
     command: harvester
+    restart: unless-stopped
     networks:
       - app_network
 
