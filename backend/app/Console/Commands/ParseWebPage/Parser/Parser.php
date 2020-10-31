@@ -9,6 +9,7 @@
 namespace App\Console\Commands\ParseWebPage\Parser;
 
 
+use App\Jobs\SendEmail;
 use App\Models\Advert;
 use App\Models\AdvertImage;
 use Carbon\Carbon;
@@ -44,6 +45,8 @@ class Parser
 
     public function parse(): void
     {
+        $newAdverts = [];
+
         for ($i = $this->startingPageNumber; $i <= $this->maxNumberOfPages; $i++) {
 
             $url = "$this->url?page=$i";
@@ -70,7 +73,10 @@ class Parser
                             $advId = preg_replace("/[\D]/", "", $advId);
                             $advert = Advert::where('advertId', '=', $advId)->first();
                             if (!$advert) {
-                                $this->parseAdvertPage($element->getAttribute('href'));
+                                $newAdvert = $this->parseAdvertPage($element->getAttribute('href'));
+                                if ($newAdvert) {
+                                    $newAdverts[] = $newAdvert;
+                                }
                             }
 
                         }
@@ -85,6 +91,11 @@ class Parser
             } else {
                 printf("\nURL %s not reachable!\n", $this->url);
             }
+        }
+
+        if (!empty($newAdverts)) {
+            SendEmail::dispatch($newAdverts);
+            print("\nEmail job was dispatched \n");
         }
 
     }
@@ -129,8 +140,9 @@ class Parser
 
     /**
      * @param string $url
+     * @return Advert | boolean
      */
-    private function parseAdvertPage(string $url): void
+    private function parseAdvertPage(string $url)
     {
         try {
             $advPage = new DOMDocument();
@@ -238,7 +250,11 @@ class Parser
                         printf("\nError while saving advert with url: %s. %s \n", $advert->advertUrl, $exception->getMessage());
                     }
 
+                    return $advert;
+
                 }
+
+                return false;
 
             }
         } catch (Exception $exception) {

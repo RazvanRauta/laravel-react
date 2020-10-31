@@ -4,10 +4,10 @@
  * @ Time: 16:55
  */
 
-import { AdvertsApiResponse, FiltersState } from '@/types'
+import {AdvertsApiResponse, FiltersState} from '@/types'
 
 import Advert from '@/models/advert'
-import { CancelToken } from 'axios'
+import {CancelToken} from 'axios'
 import HttpClient from './http-client'
 
 class AdvertsApi extends HttpClient {
@@ -20,19 +20,19 @@ class AdvertsApi extends HttpClient {
     filters?: FiltersState,
     cancelToken?: CancelToken
   ) =>
-    this.instance.get<AdvertsApiResponse>('/api/adverts', {
-      cancelToken,
-      params: {
-        page,
-        rooms: filters?.rooms ? filters?.rooms.join(',') : null,
-        price: filters?.price ? filters?.price.join(',') : null,
-      },
-    })
+      this.instance.get<AdvertsApiResponse>('/api/advs', {
+          cancelToken,
+          params: {
+              page,
+              rooms: filters?.rooms ? filters?.rooms.join(',') : null,
+              price: filters?.price ? filters?.price.join(',') : null,
+          },
+      })
 
   public getAdvert = (id: number, cancelToken?: CancelToken) =>
-    this.instance.get<Advert>(`/api/adverts/${id}`, {
-      cancelToken,
-    })
+      this.instance.get<Advert>(`/api/adv/${id}`, {
+          cancelToken,
+      })
 }
 
 export default AdvertsApi

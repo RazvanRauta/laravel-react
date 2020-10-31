@@ -23,11 +23,11 @@ Route::get('/login', function () {
         'status' => 'Error',
         'message' => 'You are not logged in',
         'data' => null
-    ],401);
+    ], 401);
 })->name('login');
 
-Route::get('/adverts', [AdvertController::class, 'index']);
-Route::get('/adverts/{id}', [AdvertController::class, 'show']);
+Route::get('/advs', [AdvertController::class, 'index']);
+Route::get('/adv/{id}', [AdvertController::class, 'show']);
 
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/users', [UserController::class, 'index']);
