@@ -3,7 +3,7 @@ New Adverts were added.
 
 @foreach($adverts as $advert)
 
-[{{$advert->title}}]({{ url('/advs/'.$advert->id) }})
+[{{$advert->title}}]({{ url('https://ama.rrazvan.dev/adv/'.$advert->id) }})
 
 @endforeach
 
