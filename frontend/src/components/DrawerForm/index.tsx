@@ -37,8 +37,8 @@ const DrawerForm: React.FC<DrawerFormProps> = ({
       onSubmit={handleFormSubmit}
     >
       {(props: FormikProps<AdvertsFilterValues>) => {
-        const { handleBlur, submitForm, values, isSubmitting } = props
-        bindFiltersForm(submitForm, values)
+        const { handleBlur, submitForm, values, isSubmitting, dirty } = props
+        if (dirty) bindFiltersForm(submitForm, values)
         return (
           <Form>
             <PriceRangeSlider

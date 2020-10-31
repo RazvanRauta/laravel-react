@@ -4,6 +4,7 @@ namespace App\Jobs;
 
 use App\Mail\AdvertAdded;
 use App\Models\Advert;
+use App\Models\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -38,8 +39,15 @@ class SendEmail implements ShouldQueue
     public function handle()
     {
         $email = new AdvertAdded($this->adverts);
+        $usersEmail = [];
 
-        Mail::to('razvan@rrazvan.dev')->send($email);
+        $users = User::all();
+
+        foreach ($users as $user){
+            $usersEmail[]=$user->email;
+        }
+
+        Mail::to($usersEmail)->send($email);
 
         print("\nEmail with new adverts was sent.\n");
 

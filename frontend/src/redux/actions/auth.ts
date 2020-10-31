@@ -32,5 +32,35 @@ export const login = (
   }
 }
 
-export const logout = (): RemoveLoginTokenThunkAction => async (dispatch) =>
-  dispatch({ type: REMOVE_TOKEN })
+export const signUp = (
+  fullName: string,
+  email: string,
+  password: string
+): SetLoginTokenThunkAction => async (dispatch) => {
+  try {
+    const authApi = new AuthApi()
+    await authApi.getCSRFCookie()
+    const response = await authApi.signUp(fullName, email, password)
+    dispatch({
+      type: SET_TOKEN,
+      token: response.access_token,
+      token_type: response.token_type,
+    })
+    return Promise.resolve({ response })
+  } catch (error) {
+    throw new Error(error.response.data.message)
+  }
+}
+
+export const logout = (
+  token: string,
+  tokenType: string
+): RemoveLoginTokenThunkAction => async (dispatch) => {
+  const authApi = new AuthApi()
+  await authApi.getCSRFCookie()
+  const response = await authApi.logout(token, tokenType)
+
+  if (response.success) {
+    dispatch({ type: REMOVE_TOKEN })
+  }
+}

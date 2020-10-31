@@ -22,9 +22,10 @@ const Header: React.FC = () => {
   const history = useHistory()
 
   const user = useSelector((state: RootState) => state.user.user)
+  const { token, tokenType } = useSelector((state: RootState) => state.auth)
 
   const handleLogout = async () => {
-    await dispatch(authActions.logout())
+    if (token && tokenType) await dispatch(authActions.logout(token, tokenType))
     await dispatch(userActions.removeCurrentUser())
     history.push(SIGN_IN_ROUTE)
   }

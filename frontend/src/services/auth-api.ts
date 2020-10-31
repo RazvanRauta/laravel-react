@@ -4,7 +4,7 @@
  * @ Time: 16:55
  */
 
-import { CurrentUserResponse, LoginApiResponse } from '@/types'
+import { CurrentUserResponse, LoginApiResponse, LogoutResponse } from '@/types'
 
 import { CancelToken } from 'axios'
 import HttpClient from './http-client'
@@ -25,6 +25,29 @@ class AuthApi extends HttpClient {
       },
       { cancelToken }
     )
+
+  public signUp = (
+    name: string,
+    email: string,
+    password: string,
+    cancelToken?: CancelToken
+  ) =>
+    this.instance.post<LoginApiResponse>(
+      '/api/register',
+      {
+        name,
+        email,
+        password,
+      },
+      { cancelToken }
+    )
+
+  public logout = (token: string, tokenType: string) =>
+    this.instance.get<LogoutResponse>('/api/logout', {
+      headers: {
+        authorization: `${tokenType} ${token}`,
+      },
+    })
 
   public getCurrentUser = (
     token: string,
