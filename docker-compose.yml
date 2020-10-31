@@ -25,7 +25,8 @@ services:
       MAILGUN_DOMAIN: ${MAILGUN_DOMAIN}
       MAILGUN_SECRET: ${MAILGUN_SECRET}
       MAILGUN_ENDPOINT: ${MAILGUN_ENDPOINT}
-      MAIL_FROM: ${MAIL_FROM}
+      MAIL_FROM_ADDRESS: ${MAIL_FROM_ADDRESS}
+      MAIL_FROM_NAME: ${MAIL_FROM_NAME}
     networks:
       - app_network
     container_name: backend

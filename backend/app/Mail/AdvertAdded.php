@@ -6,7 +6,6 @@ use App\Models\Advert;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Support\Facades\App;
 
 class AdvertAdded extends Mailable
 {
@@ -35,8 +34,7 @@ class AdvertAdded extends Mailable
      */
     public function build()
     {
-        return $this->from(App::environment('MAIL_FROM'), 'Amazing Real Estates')
-            ->subject('New Adverts')
+        return $this->subject('New Adverts')
             ->view('emails.advertAdded')->with(["adverts" => $this->adverts]);
     }
 }
