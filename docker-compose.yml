@@ -10,7 +10,7 @@ services:
       SERVICE_NAME: backend
       APP_ENV: production
       APP_DEBUG: 'false'
-      APP_NAME: 'Laravel'
+      APP_NAME: 'Amazing Real Estates'
       APP_LOG_LEVEL: 'error'
       APP_KEY: ${APP_KEY}
       DB_CONNECTION: mysql

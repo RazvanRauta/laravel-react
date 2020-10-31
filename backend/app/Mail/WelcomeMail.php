@@ -22,7 +22,6 @@ class WelcomeMail extends Mailable
     {
         $this->user = $user;
     }
-
     /**
      * Build the message.
      *
@@ -32,7 +31,7 @@ class WelcomeMail extends Mailable
     {
         return $this
             ->subject('Welcome to A.R.E')
-            ->view('emails.welcome')
+            ->markdown('emails.welcome')
             ->with(["user" => $this->user]);
     }
 }

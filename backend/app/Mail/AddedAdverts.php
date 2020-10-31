@@ -7,7 +7,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class AdvertAdded extends Mailable
+class AddedAdverts extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -26,7 +26,6 @@ class AdvertAdded extends Mailable
         $this->adverts = $adverts;
 
     }
-
     /**
      * Build the message.
      *
@@ -34,7 +33,6 @@ class AdvertAdded extends Mailable
      */
     public function build()
     {
-        return $this->subject('New Adverts')
-            ->view('emails.advertAdded')->with(["adverts" => $this->adverts]);
+        return $this->subject('New Adverts')->markdown('emails.addedAdverts')->with(["adverts" => $this->adverts]);
     }
 }
