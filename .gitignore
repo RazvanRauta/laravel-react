@@ -1,5 +1,5 @@
 /.idea/
-frontend/debug.log
-frontend/.vscode/settings.json
-frontend/generate-react-cli.json
+./frontend/.vscode/settings.json
 /.env
+/frontend/generate-react-cli.json
+/frontend/debug.log
