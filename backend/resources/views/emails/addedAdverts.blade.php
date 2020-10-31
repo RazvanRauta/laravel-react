@@ -1,12 +1,12 @@
 @component('mail::message')
-    New Adverts were added.
+New Adverts were added.
 
-    @foreach($adverts as $advert)
+@foreach($adverts as $advert)
 
-        [{{$advert->title}}]({{ url('/advs/'.$advert->id) }})
+[{{$advert->title}}]({{ url('/advs/'.$advert->id) }})
 
-    @endforeach
+@endforeach
 
-    Have a good day,<br>
-    Admin
+Have a good day,<br>
+Admin
 @endcomponent
