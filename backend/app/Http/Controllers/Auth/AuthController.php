@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\ApiController;
+use App\Jobs\SendMailNewUser;
+use App\Jobs\SendWelcomeMail;
 use App\Models\User;
 use Exception;
 use Illuminate\Http\JsonResponse;
@@ -114,6 +116,9 @@ class AuthController extends ApiController
                 $user->password = Hash::make($request->password);
 
                 $user->save();
+
+                SendMailNewUser::dispatch($user);
+                SendWelcomeMail::dispatch($user);
 
                 $tokenResult = $user->createToken('authToken')->plainTextToken;
 
