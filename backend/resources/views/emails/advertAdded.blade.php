@@ -676,7 +676,7 @@
                                                                         style="margin-top: 20px; margin-bottom: 0; font-weight: 500; vertical-align: baseline; font-size: 20px; line-height: 24px;"
                                                                         align="left">New advert/s added:</h5>
                                                                     @foreach ($adverts as $advert)
-                                                                        <a href="https://ama.rrazvam.dev/adv/{{$advert->id}}"
+                                                                        <a href="https://ama.rrazvan.dev/adv/{{$advert->id}}"
                                                                            target="_blank"
                                                                            rel="noopener nofollow"
                                                                            style="margin-top: 10px; margin-bottom: 0; font-weight: 500; vertical-align: baseline; font-size: 18px; line-height: 22px; display: inline-block;"

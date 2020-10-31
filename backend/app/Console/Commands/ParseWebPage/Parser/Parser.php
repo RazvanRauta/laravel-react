@@ -245,21 +245,24 @@ class Parser
 
                         printf("\nAdvert with url: %s was added\n", $advert->advertUrl);
 
+                        return $advert;
+
                     } catch (QueryException $exception) {
 
                         printf("\nError while saving advert with url: %s. %s \n", $advert->advertUrl, $exception->getMessage());
                     }
 
-                    return $advert;
 
                 }
-
-                return false;
 
             }
         } catch (Exception $exception) {
 
+            print($exception->getMessage());
+
         }
+
+        return false;
     }
 
     /**
