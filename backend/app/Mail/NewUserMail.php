@@ -32,7 +32,7 @@ class NewUserMail extends Mailable
     public function build()
     {
         return $this
-            ->subject('New User')
+            ->subject("New User " . $this->user->name)
             ->view('emails.newUser')
             ->with(["user" => $this->user]);
     }
