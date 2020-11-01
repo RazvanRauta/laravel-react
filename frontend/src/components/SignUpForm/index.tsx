@@ -72,6 +72,8 @@ const SignUpForm: React.FC = () => {
             handleBlur,
             handleChange,
             isSubmitting,
+            dirty,
+            isValid,
           } = props
           return (
             <Form>
@@ -159,7 +161,7 @@ const SignUpForm: React.FC = () => {
                 >
                   <TextField
                     name="password"
-                    id="password"
+                    id="passwordSingUp"
                     label="Password"
                     value={values.password}
                     type="password"
@@ -213,7 +215,7 @@ const SignUpForm: React.FC = () => {
                     type="submit"
                     variant="contained"
                     color="secondary"
-                    disabled={isSubmitting}
+                    disabled={isSubmitting || !dirty || !isValid}
                   >
                     Submit
                   </Button>

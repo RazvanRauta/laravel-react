@@ -1,7 +1,7 @@
 /**
  * @ @author: Razvan Rauta
- * @ Date: Oct 24 2020
- * @ Time: 19:45
+ * @ Date: Nov 01 2020
+ * @ Time: 14:49
  */
 
 import { Theme, createStyles, makeStyles } from '@material-ui/core/styles'
@@ -14,6 +14,7 @@ const useStyles = makeStyles((theme: Theme) =>
       margin: '0 auto',
     },
     textField: {
+      marginTop: '20px',
       '& > *': {
         width: '100%',
       },
@@ -21,9 +22,21 @@ const useStyles = makeStyles((theme: Theme) =>
     submitButton: {
       marginTop: '24px',
     },
-    title: { textAlign: 'center' },
-    successMessage: { color: 'green' },
-    errorMessage: { color: 'red' },
+    title: {
+      textAlign: 'center',
+      fontSize: 20,
+      marginBottom: 0,
+      padding: 0,
+    },
+    successMessage: {
+      color: 'green',
+    },
+    errorMessage: {
+      color: 'red',
+    },
+    helperText: {
+      marginTop: 20,
+    },
   })
 )
 

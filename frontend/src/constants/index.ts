@@ -18,3 +18,14 @@ export const userSignInSchema = Yup.object({
     .min(6)
     .required('Please valid password of min 6 characters'),
 })
+
+export const runParserSchema = Yup.object({
+  startingPageNumber: Yup.number()
+    .max(99)
+    .min(0)
+    .required('Please enter a number between 0-99'),
+  maxNumberOfPages: Yup.number()
+    .max(10)
+    .min(1)
+    .required('Please enter a number between 1-10'),
+})

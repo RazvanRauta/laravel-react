@@ -64,3 +64,7 @@ export const logout = (
     dispatch({ type: REMOVE_TOKEN })
   }
 }
+
+export const removeTokens = (): RemoveLoginTokenThunkAction => async (
+  dispatch
+) => dispatch({ type: REMOVE_TOKEN })

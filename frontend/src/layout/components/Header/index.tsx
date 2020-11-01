@@ -9,7 +9,7 @@ import * as userActions from '@/redux/actions/user'
 
 import { Avatar, Box, Button, Toolbar, Typography } from '@material-ui/core'
 import { Link, useHistory } from 'react-router-dom'
-import React, { Fragment } from 'react'
+import React, { Fragment, useEffect } from 'react'
 import { SETTINGS_ROUTE, SIGN_IN_ROUTE } from '@/routes'
 import { useDispatch, useSelector } from 'react-redux'
 
@@ -34,6 +34,20 @@ const Header: React.FC = () => {
     history.push('/')
     window.location.reload()
   }
+
+  const getCurrentUser = async (token: string, tokenType: string) => {
+    try {
+      await dispatch(userActions.setCurrentUser(token, tokenType))
+    } catch (error) {
+      await dispatch(authActions.removeTokens())
+      await dispatch(userActions.removeCurrentUser())
+    }
+  }
+
+  useEffect(() => {
+    if (token && tokenType) getCurrentUser(token, tokenType)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [token, tokenType])
 
   return (
     <Fragment>

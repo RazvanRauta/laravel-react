@@ -6,9 +6,9 @@
 
 import { RemoveUserThunkAction, SetUserThunkAction } from '@/types'
 
-import AuthApi from '@/services/auth-api'
 import { CancelToken } from 'axios'
 import User from '@/models/user'
+import UserApi from '@/services/user-api'
 
 export const SET_USER = 'SET_USER'
 export const REMOVE_USER = 'REMOVE_USER'
@@ -19,8 +19,8 @@ export const setCurrentUser = (
   cancelToken?: CancelToken
 ): SetUserThunkAction => async (dispatch) => {
   try {
-    const authApi = new AuthApi()
-    const response = await authApi.getCurrentUser(token, tokenType, cancelToken)
+    const userApi = new UserApi()
+    const response = await userApi.getCurrentUser(token, tokenType, cancelToken)
 
     if (response) {
       const { name, email } = response

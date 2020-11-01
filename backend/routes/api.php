@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\Advert\AdvertController;
 use App\Http\Controllers\Auth\AuthController;
-use App\Http\Controllers\ParserStatusController;
+use App\Http\Controllers\ParserController;
 use App\Http\Controllers\User\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -39,7 +39,9 @@ Route::middleware(['auth:sanctum'])->group(function () {
 //    Route::put('/adverts/{id}', [AdvertController::class, 'update']);
 //    Route::delete('/adverts/{id}', [AdvertController::class, 'delete']);
 
-    Route::get('/parserStatus', [ParserStatusController::class, 'show']);
+    Route::get('/parserStatus', [ParserController::class, 'show']);
+    Route::post('/parserRun', [ParserController::class, 'run']);
+
 });
 
 

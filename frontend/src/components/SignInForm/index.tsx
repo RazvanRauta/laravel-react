@@ -72,6 +72,8 @@ const SignInFrom: React.FunctionComponent = () => {
             handleBlur,
             handleChange,
             isSubmitting,
+            dirty,
+            isValid,
           } = props
           return (
             <Form>
@@ -111,7 +113,7 @@ const SignInFrom: React.FunctionComponent = () => {
                 >
                   <TextField
                     name="password"
-                    id="password"
+                    id="passwordSignIn"
                     label="Password"
                     value={values.password}
                     type="password"
@@ -137,7 +139,7 @@ const SignInFrom: React.FunctionComponent = () => {
                     type="submit"
                     variant="contained"
                     color="secondary"
-                    disabled={isSubmitting}
+                    disabled={isSubmitting || !dirty || !isValid}
                   >
                     Submit
                   </Button>

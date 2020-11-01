@@ -23,7 +23,6 @@ interface Props {
 const ProtectedRoute: React.FC<Props> = (props) => {
   const [loading, setLoading] = useState(false)
   const { token, tokenType } = useSelector((state: RootState) => state.auth)
-  const user = useSelector((state: RootState) => state.user.user)
   const Component = props.component
   const history = useHistory()
   const dispatch = useDispatch()
@@ -38,6 +37,7 @@ const ProtectedRoute: React.FC<Props> = (props) => {
       await dispatch(userActions.setCurrentUser(token, tokenType, cancelToken))
       setLoading(false)
     } catch (error) {
+      console.log(error)
       history.push(SIGN_IN_ROUTE)
     }
   }
@@ -45,7 +45,7 @@ const ProtectedRoute: React.FC<Props> = (props) => {
   useEffect(() => {
     const CancelToken = axios.CancelToken
     const source = CancelToken.source()
-    if (!user && token && tokenType) {
+    if (token && tokenType) {
       getCurrentUser(token, tokenType, source.token)
     } else if (!token || !tokenType) {
       history.push(SIGN_IN_ROUTE)
@@ -54,7 +54,7 @@ const ProtectedRoute: React.FC<Props> = (props) => {
       source.cancel()
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [user, token, tokenType])
+  }, [token, tokenType])
 
   return !loading ? <Component /> : <Loader />
 }

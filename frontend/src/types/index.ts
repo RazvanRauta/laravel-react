@@ -69,6 +69,14 @@ export interface CurrentUserResponse {
   updated_at?: any
 }
 
+export interface ParserStatusApiResponse {
+  working: boolean
+}
+
+export interface ParserRunApiResponse {
+  message: string
+}
+
 export interface LogoutResponse {
   success: boolean
 }
