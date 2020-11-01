@@ -26,6 +26,14 @@ const useStyles = makeStyles((theme: Theme) => ({
       fontSize: '11px',
     },
   },
+  fab: {
+    position: 'fixed',
+    bottom: theme.spacing(2),
+    left: theme.spacing(2),
+  },
+  extendedIcon: {
+    marginRight: 5,
+  },
 }))
 
 export default useStyles

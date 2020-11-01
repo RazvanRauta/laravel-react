@@ -65,6 +65,14 @@ const RunParserForm: React.FC<Props> = ({ inProgress }) => {
       })
     } finally {
       helpers.resetForm({})
+      setTimeout(
+        () =>
+          setFormStatus({
+            message: '',
+            type: '',
+          }),
+        5000
+      )
     }
   }
 

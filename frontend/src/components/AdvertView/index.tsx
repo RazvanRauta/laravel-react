@@ -4,10 +4,11 @@
  *  Time: 16:41
  */
 
-import { AttachMoney, HomeOutlined, Today } from '@material-ui/icons'
+import { AttachMoney, Edit, HomeOutlined, Today } from '@material-ui/icons'
 import {
   Box,
   Chip,
+  Fab,
   Paper,
   Table,
   TableBody,
@@ -16,32 +17,38 @@ import {
   TableRow,
   Typography,
 } from '@material-ui/core'
+import { useHistory, useLocation } from 'react-router-dom'
 
 import AdvCarousel from '../Carousel'
 import Advert from '@/models/advert'
 import { Helmet } from 'react-helmet'
 import React from 'react'
+import { RootState } from '@/redux/rootReducer'
 import { format } from 'date-fns'
-import { useLocation } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 import useStyles from './styles'
 
-const AdvertView: React.FC<Advert> = ({
-  advertUrl,
-  advertId,
-  floor,
-  images,
-  description,
-  price,
-  priceType,
-  rooms,
-  size,
-  title,
-  postedDate,
-  city,
-  region,
-}) => {
+const AdvertView: React.FC<Advert> = (adv) => {
+  const {
+    advertUrl,
+    advertId,
+    floor,
+    images,
+    description,
+    price,
+    priceType,
+    rooms,
+    size,
+    title,
+    postedDate,
+    city,
+    region,
+  } = adv
+
   const classes = useStyles()
   const location = useLocation()
+  const history = useHistory()
+  const user = useSelector((state: RootState) => state.user.user)
 
   return (
     <>
@@ -205,6 +212,22 @@ const AdvertView: React.FC<Advert> = ({
           </Table>
         </TableContainer>
       </Box>
+      {user && (
+        <Fab
+          variant="extended"
+          className={classes.fab}
+          color="default"
+          onClick={() =>
+            history.push({
+              pathname: '/edit/' + adv.id,
+              state: { adv },
+            })
+          }
+        >
+          <Edit className={classes.extendedIcon} />
+          Edit
+        </Fab>
+      )}
     </>
   )
 }
