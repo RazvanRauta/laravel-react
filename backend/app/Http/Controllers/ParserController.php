@@ -34,7 +34,9 @@ class ParserController extends ApiController
             }
 
             Artisan::queue('rr:parse-web-page', [
-                'startingPageNumber' => $request->startingPageNumber ?: 0, 'maxNumberOfPages' => $request->maxNumberOfPages ?: 3
+                'startingPageNumber' => $request->startingPageNumber ?: 0,
+                'maxNumberOfPages' => $request->maxNumberOfPages ?: 3,
+                "--timeout" => 0
             ]);
 
             return $this->successResponse(["message" => "Command was added to the queue"]);

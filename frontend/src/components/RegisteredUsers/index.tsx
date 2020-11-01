@@ -8,7 +8,6 @@ import {
   Avatar,
   Box,
   CircularProgress,
-  Grid,
   List,
   ListItem,
   ListItemAvatar,
@@ -77,10 +76,10 @@ const RegisteredUsers: React.FC = () => {
       flexDirection="column"
       alignItems="center"
       justifyContent="center"
-      margin="20px auto"
+      margin="0 auto 20px"
       className={classes.container}
     >
-      <Typography variant="h5">List of Users</Typography>
+      <h1 className={classes.title}>List of Users</h1>
       {!loading && usersList.users ? (
         <>
           <div className={classes.root}>

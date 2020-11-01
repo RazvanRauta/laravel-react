@@ -21,12 +21,22 @@ const useStyles = makeStyles((theme: Theme) =>
       overflow: 'auto',
       display: 'flex',
       flexDirection: 'column',
-      justifyContent: 'center',
       alignContent: 'center',
     },
     infoTip: {
       maxWidth: '80%',
       margin: '0 auto 20px',
+    },
+    title: {
+      textAlign: 'center',
+      fontSize: 20,
+      margin: 0,
+      padding: 0,
+    },
+    [theme.breakpoints.down('sm')]: {
+      title: {
+        marginTop: 20,
+      },
     },
   })
 )
