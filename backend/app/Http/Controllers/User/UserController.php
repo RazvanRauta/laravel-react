@@ -16,6 +16,11 @@ class UserController extends ApiController
     public function index()
     {
         $users = User::all();
+        foreach ($users as $user){
+            $email = explode("@",$user->email);
+            $email = $email[0].'@---.' . explode(".",$email[1])[1];
+            $user->email = $email;
+        }
         return $this->successResponse($users);
     }
 

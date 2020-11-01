@@ -186,8 +186,8 @@ const RunParserForm: React.FC<Props> = ({ inProgress }) => {
                     className={classes.helperText}
                   >
                     <Typography variant="caption">
-                      * on submit the command will be added to queue
-                      <br /> and will start in 1-2 min
+                      * on submit, the command will be added to queue
+                      <br /> and will start in 2-3 min
                     </Typography>
                   </Grid>
                 )}

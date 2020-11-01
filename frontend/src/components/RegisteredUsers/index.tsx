@@ -99,7 +99,7 @@ const RegisteredUsers: React.FC = () => {
           <Typography
             className={classes.infoTip}
             gutterBottom
-            variant="subtitle2"
+            variant="caption"
           >
             All registered users will receive e-mails when a new advert is found
             by the parser
