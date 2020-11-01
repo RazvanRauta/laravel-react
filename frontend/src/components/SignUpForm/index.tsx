@@ -137,7 +137,7 @@ const SignUpForm: React.FC = () => {
                 >
                   <TextField
                     name="email"
-                    id="email"
+                    id="emailSignUp"
                     label="Email"
                     value={values.email}
                     type="email"
