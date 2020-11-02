@@ -19,7 +19,7 @@ import {
 } from '@material-ui/core'
 import { Link, useHistory } from 'react-router-dom'
 import React, { Fragment, useEffect } from 'react'
-import { SETTINGS_ROUTE, SIGN_IN_ROUTE } from '@/routes'
+import { SETTINGS_ROUTE, SIGN_IN_ROUTE, SWAGGER_DOCS } from '@/routes'
 import { useDispatch, useSelector } from 'react-redux'
 
 import MoreVertIcon from '@material-ui/icons/MoreVert'
@@ -102,6 +102,18 @@ const Header: React.FC = () => {
                 className={classes.button}
               >
                 Sign In
+              </Button>
+            )}
+            {user && (
+              <Button
+                component={Link}
+                to={SWAGGER_DOCS}
+                variant="outlined"
+                color="secondary"
+                size="small"
+                className={classes.button}
+              >
+                Api Docs
               </Button>
             )}
             {user && (
