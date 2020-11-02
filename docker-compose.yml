@@ -70,7 +70,6 @@ services:
     restart: unless-stopped
     environment:
        SERVICE_NAME: frontend
-       REACT_APP_API_URL: '/api'
        NODE_ENV: production
     tty: true
     volumes: 

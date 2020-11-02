@@ -31,7 +31,7 @@ class Kernel extends ConsoleKernel
             $fileLocation = 'storage/logs/laravel.log';
         }
 
-        $schedule->command('rr:parse-web-page')->everyTenMinutes()->appendOutputTo($fileLocation);
+        $schedule->command('rr:parse-web-page')->twiceDaily(13, 19)->appendOutputTo($fileLocation);
     }
 
     /**
