@@ -71,7 +71,6 @@ services:
     environment:
        SERVICE_NAME: frontend
        REACT_APP_API_URL: '/api'
-       NODE_OPTIONS: "--max-old-space-size=2048"
        NODE_ENV: production
     tty: true
     volumes: 

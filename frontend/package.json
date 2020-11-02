@@ -7,6 +7,7 @@
     "@material-ui/icons": "^4.9.1",
     "@material-ui/lab": "^4.0.0-alpha.56",
     "axios": "^0.20.0",
+    "cross-env": "^7.0.2",
     "date-fns": "^2.16.1",
     "dotenv": "^8.2.0",
     "formik": "^2.2.0",
@@ -25,7 +26,7 @@
   },
   "scripts": {
     "start": "react-app-rewired start",
-    "build": "react-app-rewired build --max-old-space-size=2048",
+    "build": "cross-env NODE_OPTIONS=--max_old_space_size=4096 react-app-rewired build",
     "test": "react-app-rewired test",
     "eject": "react-app-rewired eject"
   },
