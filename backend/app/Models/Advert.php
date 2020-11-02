@@ -64,6 +64,8 @@ class Advert extends Model
     protected $fillable = [
         'title',
         'description',
+        'price',
+        'priceType'
     ];
 
     public function images()

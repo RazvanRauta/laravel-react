@@ -29,3 +29,10 @@ export const runParserSchema = Yup.object({
     .min(1)
     .required('Please enter a number between 1-10'),
 })
+
+export const editFormSchema = Yup.object({
+  title: Yup.string().required('Title is required'),
+  description: Yup.string().required('Description is required'),
+  price: Yup.number().required('The price is required'),
+  priceType: Yup.string().required('The price type is required'),
+})

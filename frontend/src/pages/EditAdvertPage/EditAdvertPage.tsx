@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useHistory, useLocation } from 'react-router-dom'
 
 import Advert from '@/models/advert'
+import EditAdvertForm from '@/components/EditAdvertForm'
 import { HOME_ROUTE } from '@/routes'
 
 interface IState {
@@ -24,7 +25,7 @@ const EditAdvertPage: React.FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  return adv ? <h1>{adv.title}</h1> : null
+  return adv ? <EditAdvertForm {...adv} /> : null
 }
 
 export default EditAdvertPage

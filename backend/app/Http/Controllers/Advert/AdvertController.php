@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Advert;
 
 use App\Http\Controllers\ApiController;
 use App\Models\Advert;
+use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
@@ -36,16 +37,6 @@ class AdvertController extends ApiController
         $this->errorResponse('No adverts were found', 404);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param Request $request
-     * @return JsonResponse
-     */
-    public function store(Request $request): JsonResponse
-    {
-        return $this->successResponse(Advert::create($request->all()));
-    }
 
     /**
      * Display the specified resource.
@@ -81,6 +72,7 @@ class AdvertController extends ApiController
      *
      * @param int $id
      * @return JsonResponse
+     * @throws Exception
      */
     public function delete($id): JsonResponse
     {

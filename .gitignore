@@ -3,3 +3,4 @@
 /.env
 /frontend/generate-react-cli.json
 /frontend/debug.log
+backend/.phpstorm.meta.php
