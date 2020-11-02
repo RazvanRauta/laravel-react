@@ -19,7 +19,13 @@ const Swagger: React.FC = () => {
   return (
     <Container className={classes.root}>
       {!matches ? (
-        <SwaggerUI url={`${process.env.REACT_APP_API_URL}/api/docs`} />
+        <SwaggerUI
+          url={
+            typeof process.env.REACT_APP_API_URL !== 'undefined'
+              ? `${process.env.REACT_APP_API_URL}/api/docs`
+              : '/api/docs'
+          }
+        />
       ) : (
         <Box
           width="90vw"
