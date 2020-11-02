@@ -94,15 +94,15 @@ services:
     restart: unless-stopped
     tty: true
 
-  adminer:
-    image: adminer
-    restart: on-failure
-    tty: true
-    ports:
-      - 8080:8080
-    container_name: adminer
-    networks:
-      - app_network
+  # adminer:
+  #   image: adminer
+  #   restart: on-failure
+  #   tty: true
+  #   ports:
+  #     - 8080:8080
+  #   container_name: adminer
+  #   networks:
+  #     - app_network
 
   logioweb:
     hostname: air-logs
