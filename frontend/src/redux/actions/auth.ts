@@ -52,16 +52,19 @@ export const signUp = (
   }
 }
 
-export const logout = (
-  token: string,
-  tokenType: string
-): RemoveLoginTokenThunkAction => async (dispatch) => {
+export const logout = (): RemoveLoginTokenThunkAction => async (
+  dispatch,
+  getState
+) => {
   const authApi = new AuthApi()
   await authApi.getCSRFCookie()
-  const response = await authApi.logout(token, tokenType)
+  const { token, tokenType } = getState().auth
+  if (token && tokenType) {
+    const response = await authApi.logout(token, tokenType)
 
-  if (response.success) {
-    dispatch({ type: REMOVE_TOKEN })
+    if (response.success) {
+      dispatch({ type: REMOVE_TOKEN })
+    }
   }
 }
 

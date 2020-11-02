@@ -49,7 +49,7 @@ const Header: React.FC = () => {
   }
 
   const handleLogout = async () => {
-    if (token && tokenType) await dispatch(authActions.logout(token, tokenType))
+    await dispatch(authActions.logout())
     await dispatch(userActions.removeCurrentUser())
     history.push(SIGN_IN_ROUTE)
   }

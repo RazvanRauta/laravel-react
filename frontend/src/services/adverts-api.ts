@@ -4,7 +4,11 @@
  * @ Time: 16:55
  */
 
-import { AdvertsApiResponse, FiltersState } from '@/types'
+import {
+  AdvertsApiResponse,
+  DeleteAvertApiResponse,
+  FiltersState,
+} from '@/types'
 
 import Advert from '@/models/advert'
 import { CancelToken } from 'axios'
@@ -54,6 +58,19 @@ class AdvertsApi extends HttpClient {
         },
       }
     )
+
+  public deleteAdvert = (
+    id: number,
+    token: string,
+    tokenType: string,
+    cancelToken?: CancelToken
+  ) =>
+    this.instance.delete<DeleteAvertApiResponse>(`/api/adv/${id}`, {
+      cancelToken,
+      headers: {
+        authorization: `${tokenType} ${token}`,
+      },
+    })
 }
 
 export default AdvertsApi

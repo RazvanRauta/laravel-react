@@ -4,8 +4,11 @@
  *  Time: 20:58
  */
 
-import { AttachMoney, HomeOutlined, Today } from '@material-ui/icons'
+import * as advertsActions from '@/redux/actions/adverts'
+
+import { AttachMoney, Delete, HomeOutlined, Today } from '@material-ui/icons'
 import {
+  Avatar,
   Box,
   Card,
   CardActionArea,
@@ -13,26 +16,49 @@ import {
   CardMedia,
   Chip,
   Divider,
+  IconButton,
   Typography,
 } from '@material-ui/core'
 
 import Advert from '@/models/advert'
 import { Link } from 'react-router-dom'
 import React from 'react'
+import User from '@/models/user'
 import { format } from 'date-fns'
+import { useDispatch } from 'react-redux'
 import useStyles from './styles'
 
-const AdvertCard: React.FC<Advert> = ({
-  title,
-  description,
-  price,
-  priceType,
-  postedDate,
-  rooms,
-  id,
-  images,
-}) => {
+interface AdvertCardProps {
+  advert: Advert
+  user: User | null
+  setError: React.Dispatch<React.SetStateAction<string | null>>
+}
+
+const AdvertCard: React.FC<AdvertCardProps> = ({ advert, user, setError }) => {
+  const {
+    title,
+    description,
+    price,
+    priceType,
+    postedDate,
+    rooms,
+    id,
+    images,
+  } = advert
   const classes = useStyles()
+  const dispatch = useDispatch()
+
+  const handleClick = async (
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
+    event.stopPropagation()
+    console.log('hello')
+    await dispatch(advertsActions.deleteAdvert(advert.id))
+    try {
+    } catch (error) {
+      setError(error)
+    }
+  }
 
   return (
     <Card className={classes.root}>
@@ -83,6 +109,13 @@ const AdvertCard: React.FC<Advert> = ({
           </CardContent>
         </CardActionArea>
       </Link>
+      {user && (
+        <IconButton className={classes.delete} onClick={handleClick}>
+          <Avatar>
+            <Delete color="secondary" />
+          </Avatar>
+        </IconButton>
+      )}
     </Card>
   )
 }

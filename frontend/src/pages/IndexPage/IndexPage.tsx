@@ -37,6 +37,7 @@ const IndexPage: React.FC = () => {
 
   const adverts = useSelector((state: RootState) => state.advertsData.adverts)
   const filters = useSelector((state: RootState) => state.advertsData.filters)
+  const user = useSelector((state: RootState) => state.user.user)
   const last_page = advertsData?.last_page ?? 1
   const current_page = advertsData?.current_page
 
@@ -150,7 +151,7 @@ const IndexPage: React.FC = () => {
             {adverts &&
               adverts.map((advert) => (
                 <Grid key={advert.id} item xs={12} md={6}>
-                  <AdvertCard {...advert} />
+                  <AdvertCard advert={advert} user={user} setError={setError} />
                 </Grid>
               ))}
           </Grid>

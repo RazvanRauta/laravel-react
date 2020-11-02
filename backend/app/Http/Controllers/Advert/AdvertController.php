@@ -79,6 +79,6 @@ class AdvertController extends ApiController
         $advert = Advert::findOrFail($id);
         $advert->delete();
 
-        return $this->successResponse(null, 'Advert deleted', 204);
+        return $this->successResponse(["message"=>'Advert deleted'], null, 200);
     }
 }

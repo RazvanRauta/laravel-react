@@ -4,13 +4,14 @@
  * @ Time: 19:19
  */
 
-import { REMOVE_TOKEN, SET_TOKEN } from '@/redux/actions/auth'
-import { REMOVE_USER, SET_USER } from '@/redux/actions/user'
 import {
+  DELETE_ADVERT,
   RESET_FILTERS,
   SET_ADVERTS_DATA,
   SET_ADVERTS_FILTERS,
 } from '@/redux/actions/adverts'
+import { REMOVE_TOKEN, SET_TOKEN } from '@/redux/actions/auth'
+import { REMOVE_USER, SET_USER } from '@/redux/actions/user'
 
 import Advert from '@/models/advert'
 import { RootState } from '@/redux/rootReducer'
@@ -77,6 +78,10 @@ export interface ParserRunApiResponse {
   message: string
 }
 
+export interface DeleteAvertApiResponse {
+  message: string
+}
+
 export interface LogoutResponse {
   success: boolean
 }
@@ -111,6 +116,11 @@ export interface SignUpFormValues {
 export interface SetAdvertsAction {
   type: typeof SET_ADVERTS_DATA
   advertsData: AdvertsApiResponse
+}
+
+export interface DeleteAdvertAction {
+  type: typeof DELETE_ADVERT
+  advertId: number
 }
 
 export interface SetLoginTokenAction {
@@ -151,6 +161,13 @@ export type SetAdvertsThunkAction = ThunkAction<
   SetAdvertsAction
 >
 
+export type DeleteAdvertThunkAction = ThunkAction<
+  void,
+  RootState,
+  unknown,
+  DeleteAdvertAction
+>
+
 export type SetAdvertsFiltersThunkAction = ThunkAction<
   void,
   RootState,
@@ -169,6 +186,7 @@ export type AdvertsActionTypes =
   | SetAdvertsAction
   | SetAdvertsFiltersAction
   | ResetFiltersAction
+  | DeleteAdvertAction
 
 export type SetLoginTokenThunkAction = ThunkAction<
   void,

@@ -6,6 +6,7 @@
 
 import { AdvertsActionTypes, AdvertsState } from '@/types'
 import {
+  DELETE_ADVERT,
   RESET_FILTERS,
   SET_ADVERTS_DATA,
   SET_ADVERTS_FILTERS,
@@ -43,6 +44,14 @@ export default (
       return {
         ...state,
         filters: action.filters,
+      }
+
+    case DELETE_ADVERT:
+      return {
+        ...state,
+        adverts: state.adverts
+          ? state.adverts.filter((advert) => advert.id !== action.advertId)
+          : null,
       }
 
     case RESET_FILTERS:

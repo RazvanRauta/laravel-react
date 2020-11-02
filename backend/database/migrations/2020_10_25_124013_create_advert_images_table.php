@@ -21,7 +21,7 @@ class CreateAdvertImagesTable extends Migration
             $table->foreign('advert_id')
                 ->references('id')
                 ->on('adverts')
-                ->onCascade('delete');
+                ->onDelete('cascade');
         });
     }
 

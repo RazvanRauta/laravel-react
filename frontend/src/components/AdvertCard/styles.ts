@@ -10,6 +10,12 @@ const useStyles = makeStyles((theme: Theme) => ({
   root: {
     width: '100%',
     height: '100%',
+    position: 'relative',
+  },
+  delete: {
+    position: 'absolute',
+    top: '0',
+    right: '0',
   },
   media: {
     height: 220,
@@ -32,6 +38,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     margin: 0,
     padding: 0,
   },
+
   chip: {
     [theme.breakpoints.down('md')]: {
       fontSize: '11px',

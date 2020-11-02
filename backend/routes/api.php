@@ -36,7 +36,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/logout',[AuthController::class, 'logout']);
 
     Route::put('/adv/{id}', [AdvertController::class, 'update']);
-    Route::delete('/adverts/{id}', [AdvertController::class, 'delete']);
+    Route::delete('/adv/{id}', [AdvertController::class, 'delete']);
 
     Route::get('/parserStatus', [ParserController::class, 'show']);
     Route::post('/parserRun', [ParserController::class, 'run']);
