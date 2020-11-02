@@ -10,16 +10,7 @@ use Illuminate\Http\Request;
 class AdvertController extends ApiController
 {
     /**
-     * @OA\GET(
-     *     path="/api/adverts",
-     *     summary="Returns a list of adverts",
-     *     @OA\Response(
-     *         response=200,
-     *         description="List of adverts",
-     *     @OA\MediaType(
-     *         mediaType="application/json",
-     *         @OA\Schema(),
-     * )
+     *
      * Display a listing of the resource.
      *
      * @param Request $request

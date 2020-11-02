@@ -13,56 +13,9 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
-
 class AuthController extends ApiController
 {
     /**
-     * @OA\Post(
-     *     path="/api/login",
-     *     summary="Login with email and password",
-     *     @OA\RequestBody(
-     *         @OA\MediaType(
-     *             mediaType="application/json",
-     *             @OA\Schema(
-     *                 @OA\Property(
-     *                     property="email",
-     *                     type="string"
-     *                 ),
-     *                 @OA\Property(
-     *                     property="password",
-     *                     type="string"
-     *                 ),
-     *                 example={"email": "test@testy.com", "password": "password"}
-     *             )
-     *         )
-     *     ),
-     *     @OA\Response(
-     *         response=200,
-     *         description="Access code",
-     *     @OA\MediaType(
-     *         mediaType="application/json",
-     *         @OA\Schema(
-     *                 @OA\Property(
-     *                     property="status_code",
-     *                     type="int"
-     *                 ),
-     *                 @OA\Property(
-     *                     property="access_token",
-     *                     type="string"
-     *                 ),
-     *                @OA\Property(
-     *                     property="token_type",
-     *                     type="string"
-     *                 ),
-     *              example={
-     *                 "status_code": 200,
-     *                 "access_token": "1|CLjA6Efso0bncROxknVwpdWqJx8Ohg1OazrAut8M",
-     *                 "token_type": "Bearer"
-     *                  }
-     *        ),
-     *     )
-     *     ),
-     * )
      * @param Request $request
      * @return JsonResponse
      * @throws Exception
@@ -85,7 +38,7 @@ class AuthController extends ApiController
             $tokenResult = $user->createToken('authToken')->plainTextToken;
 
             return $this->successResponse(['access_token' => $tokenResult,
-                'token_type' => 'Bearer',]);
+                'token_type' => 'Bearer']);
         } catch (Exception $error) {
             return $this->errorResponse($error, 401);
         }
@@ -123,7 +76,7 @@ class AuthController extends ApiController
                 $tokenResult = $user->createToken('authToken')->plainTextToken;
 
                 return $this->successResponse(['access_token' => $tokenResult,
-                    'token_type' => 'Bearer',]);
+                    'token_type' => 'Bearer']);
 
             }
 
@@ -161,7 +114,7 @@ class AuthController extends ApiController
         return Validator::make(request()->all(), [
             'email' => 'required|string|email|max:255',
             'password' => 'required|string|min:6',
-            'name' => 'required|string'
+            'name' => 'required|string',
         ]);
     }
 }

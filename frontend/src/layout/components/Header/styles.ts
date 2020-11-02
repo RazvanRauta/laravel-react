@@ -4,9 +4,9 @@
  * @ Time: 12:39
  */
 
-import { makeStyles } from '@material-ui/core/styles'
+import { Theme, makeStyles } from '@material-ui/core/styles'
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles((theme: Theme) => ({
   toolbar: {
     padding: theme.spacing(3, 2),
     justifyContent: 'space-between',
@@ -21,6 +21,11 @@ const useStyles = makeStyles((theme) => ({
   },
   button: {
     margin: '0 5px',
+  },
+  [theme.breakpoints.down('xs')]: {
+    toolbarTitle: {
+      fontSize: 20,
+    },
   },
 }))
 
