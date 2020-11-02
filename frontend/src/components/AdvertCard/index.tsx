@@ -24,7 +24,7 @@ import Advert from '@/models/advert'
 import { Link } from 'react-router-dom'
 import React from 'react'
 import User from '@/models/user'
-import { format } from 'date-fns'
+import format from 'date-fns/format'
 import { useDispatch } from 'react-redux'
 import useStyles from './styles'
 

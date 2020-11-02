@@ -24,7 +24,7 @@ import Advert from '@/models/advert'
 import { Helmet } from 'react-helmet'
 import React from 'react'
 import { RootState } from '@/redux/rootReducer'
-import { format } from 'date-fns'
+import format from 'date-fns/format'
 import { useSelector } from 'react-redux'
 import useStyles from './styles'
 
