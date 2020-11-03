@@ -149,8 +149,12 @@ networks:
 
 volumes:
   certs-location:
-    name: ${CERT_LOCATION}
-    external: false
+    name: certs-location
+    driver_opts:
+        type: none
+        device: ${CERT_LOCATION}
+        o: bind
+
   dbdata:
     driver: local
     name: dbdata
