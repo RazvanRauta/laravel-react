@@ -13,7 +13,7 @@ App's backend is made with Laravel and the frontend React, Redux, Material-UI, T
 #### [https://ama.rrazvan.dev](https://ama.rrazvan.dev)
 
 <p align="center">
-  <img src="git/screen.png" width="860" height="430"/>
+  <img src="git/screen.png" width="860" height="360"/>
 </p>
 
 ## Requierments
