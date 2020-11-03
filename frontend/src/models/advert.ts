@@ -12,7 +12,7 @@ class Advert {
   description: string
   price: string
   priceType: string
-  postedDate: Date
+  postedDate: string
   advertUrl: string
   images: AdvertImage[]
   size: string

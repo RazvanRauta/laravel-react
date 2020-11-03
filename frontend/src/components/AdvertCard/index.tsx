@@ -100,7 +100,10 @@ const AdvertCard: React.FC<AdvertCardProps> = ({ advert, user, setError }) => {
               />
               <Chip
                 icon={<Today />}
-                label={format(new Date(postedDate), 'MMM dd, yyyy')}
+                label={format(
+                  new Date(postedDate.replace(/ /g, 'T') + 'Z'),
+                  'MMM dd, yyyy'
+                )}
                 color="secondary"
                 variant="outlined"
                 className={classes.chip}

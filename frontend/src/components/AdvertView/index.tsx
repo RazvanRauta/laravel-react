@@ -108,7 +108,10 @@ const AdvertView: React.FC<Advert> = (adv) => {
           />
           <Chip
             icon={<Today />}
-            label={format(new Date(postedDate), 'MMM dd, yyyy')}
+            label={format(
+              new Date(postedDate.replace(/ /g, 'T') + 'Z'),
+              'MMM dd, yyyy'
+            )}
             color="secondary"
             variant="outlined"
             className={classes.chip}
@@ -165,7 +168,10 @@ const AdvertView: React.FC<Advert> = (adv) => {
                 </TableCell>
                 <TableCell align="center" colSpan={2}>
                   {postedDate
-                    ? format(new Date(postedDate), 'MMM dd, yyyy')
+                    ? format(
+                        new Date(postedDate.replace(/ /g, 'T') + 'Z'),
+                        'MMM dd, yyyy'
+                      )
                     : 'Not Specified'}
                 </TableCell>
               </TableRow>
