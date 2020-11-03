@@ -6,8 +6,8 @@
 
 import * as authActions from '@/redux/actions/auth'
 
-import { Button, Grid, TextField } from '@material-ui/core'
 import { Form, Formik, FormikHelpers, FormikProps } from 'formik'
+import { Grid, TextField } from '@material-ui/core'
 import React, { useState } from 'react'
 
 import { SETTINGS_ROUTE } from '@/routes'

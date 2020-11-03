@@ -4,7 +4,7 @@
  *  Time: 18:15
  */
 
-import { Box, Button, FormGroup } from '@material-ui/core'
+import { Box, FormGroup } from '@material-ui/core'
 import { Form, Formik, FormikProps } from 'formik'
 
 import { AdvertsFilterValues } from '@/types'
