@@ -10,13 +10,14 @@ Simple app compose from a server app wich is providing the api logic and a clien
 
 ## Live view
 
-#### [https://ama.rrazvan.dev](https://ama.rrazvan.dev)
+### [https://ama.rrazvan.dev](https://ama.rrazvan.dev)
 
 <p align="center">
   <img src="git/screen.png" width="860" height="360"/>
 </p>
 
 ## Requierments
+
 * php 7.4
 * node-js
 * yarn
@@ -49,8 +50,8 @@ In ./frontend
 
 ## Build project with docker
 
-* Create .env file in repo's root with your variables 
+* Create .env file in repo's root with your variables
+* Generate SSL certificates and add the folder path to .env `CERT_LOCATION`
 * `docker-compose up --build -d`
 
-
-
+For using without certificates modify [frontend/nginx/nginx.conf](frontend/nginx/nginx.conf) and adjust the [docker-compose.yml](docker-compose.yml)
