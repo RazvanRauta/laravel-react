@@ -21,7 +21,7 @@ import { useHistory, useLocation } from 'react-router-dom'
 
 import AdvCarousel from '../Carousel'
 import Advert from '@/models/advert'
-import { Helmet } from 'react-helmet'
+import { Helmet } from 'react-helmet-async'
 import React from 'react'
 import { RootState } from '@/redux/rootReducer'
 import format from 'date-fns/format'

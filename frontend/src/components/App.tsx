@@ -4,6 +4,7 @@
  *  Time: 14:30
  */
 
+import { Helmet, HelmetProvider } from 'react-helmet-async'
 import {
   Redirect,
   Route,
@@ -14,7 +15,6 @@ import { protectedRoutes, routes } from '@/routes'
 
 import { CssBaseline } from '@material-ui/core'
 import CustomThemeProvider from '@/providers/ThemeProvider'
-import { Helmet } from 'react-helmet'
 import Layout from '@/layout'
 import { PersistGate } from 'redux-persist/integration/react'
 import ProtectedRoute from './ProtectedRoute'
@@ -37,38 +37,40 @@ const App = () => {
   return (
     <Provider store={store}>
       <PersistGate persistor={persistor}>
-        <CustomThemeProvider>
-          <CssBaseline />
-          <Router>
-            <Helmet>
-              <meta property="og:site_name" content="Amazing Real Estates" />
-              <link rel="canonical" href="https://ama.rrazvan.dev" />
-              <meta property="og:url" content="https://ama.rrazvan.dev" />
-              <meta
-                property="og:image"
-                content="https://ama.rrazvan.dev/meta.png"
-              />
-              <title>Amazing Real Estates</title>
-              <meta property="og:type" content="website" />
-              <meta property="og:title" content="Amazing Real Estate" />
-              <meta
-                property="og:description"
-                content="The most amazing app you will ever see"
-              />
-              <meta
-                name="description"
-                content="The most amazing app you will ever see"
-              />
-              <meta property="og:url" content="https://ama.rrazvan.dev" />
-              <meta property="og:image:type" content="image/png" />
-              <meta property="og:image:width" content="1800" />
-              <meta property="og:image:height" content="976" />
-            </Helmet>
-            <Layout>
-              <Switch>{routeComponents}</Switch>
-            </Layout>
-          </Router>
-        </CustomThemeProvider>
+        <HelmetProvider>
+          <CustomThemeProvider>
+            <CssBaseline />
+            <Router>
+              <Helmet>
+                <meta property="og:site_name" content="Amazing Real Estates" />
+                <link rel="canonical" href="https://ama.rrazvan.dev" />
+                <meta property="og:url" content="https://ama.rrazvan.dev" />
+                <meta
+                  property="og:image"
+                  content="https://ama.rrazvan.dev/meta.png"
+                />
+                <title>Amazing Real Estates</title>
+                <meta property="og:type" content="website" />
+                <meta property="og:title" content="Amazing Real Estate" />
+                <meta
+                  property="og:description"
+                  content="The most amazing app you will ever see"
+                />
+                <meta
+                  name="description"
+                  content="The most amazing app you will ever see"
+                />
+                <meta property="og:url" content="https://ama.rrazvan.dev" />
+                <meta property="og:image:type" content="image/png" />
+                <meta property="og:image:width" content="1800" />
+                <meta property="og:image:height" content="976" />
+              </Helmet>
+              <Layout>
+                <Switch>{routeComponents}</Switch>
+              </Layout>
+            </Router>
+          </CustomThemeProvider>
+        </HelmetProvider>
       </PersistGate>
     </Provider>
   )
