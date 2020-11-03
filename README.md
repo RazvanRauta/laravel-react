@@ -6,7 +6,7 @@
 
 ## Description
 
-App's backend is made with Laravel and the frontend React, Redux, Material-UI, Typscript  
+Simple app compose from a server app wich is providing the api logic and a client app for the ui. The backend is made with Laravel and the frontend with React, Redux, Material-UI, Typscript  
 
 ## Live view
 
