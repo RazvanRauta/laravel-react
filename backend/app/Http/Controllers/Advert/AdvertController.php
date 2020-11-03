@@ -28,7 +28,7 @@ class AdvertController extends ApiController
                 return $query->whereIn('rooms', $rooms);
             })
             ->when($price, function ($query) use ($price) {
-                return $query->orWhereBetween('price', $price);
+                return $query->whereBetween('price', $price);
             })
             ->paginate(6);
 
