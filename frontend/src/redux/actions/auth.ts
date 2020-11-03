@@ -57,7 +57,6 @@ export const logout = (): RemoveLoginTokenThunkAction => async (
   getState
 ) => {
   const authApi = new AuthApi()
-  await authApi.getCSRFCookie()
   const { token, tokenType } = getState().auth
   if (token && tokenType) {
     const response = await authApi.logout(token, tokenType)

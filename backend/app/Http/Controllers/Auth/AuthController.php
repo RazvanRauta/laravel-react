@@ -97,11 +97,11 @@ class AuthController extends ApiController
             $request->user()->currentAccessToken()->delete();
             return $this->successResponse(["success" => true]);
         } catch (Exception $error) {
-            return $this->errorResponse($error, 422);
+            return $this->errorResponse($error->getMessage(), 422);
         }
     }
 
-    public function validateLoginCreds()
+    public function validateLoginCreds() : \Illuminate\Contracts\Validation\Validator
     {
         return Validator::make(request()->all(), [
             'email' => 'required|string|email|max:255',
@@ -109,7 +109,7 @@ class AuthController extends ApiController
         ]);
     }
 
-    public function validateRegisterCreds()
+    public function validateRegisterCreds() : \Illuminate\Contracts\Validation\Validator
     {
         return Validator::make(request()->all(), [
             'email' => 'required|string|email|max:255',

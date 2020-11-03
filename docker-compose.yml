@@ -150,6 +150,7 @@ networks:
 volumes:
   certs-location:
     name: certs-location
+    driver: local
     driver_opts:
         type: none
         device: ${CERT_LOCATION}

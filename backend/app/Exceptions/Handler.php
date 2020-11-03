@@ -51,7 +51,7 @@ class Handler extends ExceptionHandler
      * Render an exception into an HTTP response.
      *
      * @param Request $request
-     * @param Exception $exception
+     * @param $exception
      * @return JsonResponse| Response
      */
     public function render($request, $exception)
@@ -59,7 +59,7 @@ class Handler extends ExceptionHandler
         return $this->handleException($request, $exception);
     }
 
-    public function handleException($request, Exception $exception)
+    public function handleException($request, $exception)
     {
 
         if ($exception instanceof MethodNotAllowedHttpException) {
@@ -72,6 +72,14 @@ class Handler extends ExceptionHandler
 
         if ($exception instanceof HttpException) {
             return $this->errorResponse($exception->getMessage(), $exception->getStatusCode());
+        }
+
+        if ($exception instanceof Throwable) {
+            return $this->errorResponse($exception->getMessage(), 500);
+        }
+
+        if ($exception instanceof Exception) {
+            return $this->errorResponse($exception->getMessage(), 500);
         }
 
         if (config('app.debug')) {
