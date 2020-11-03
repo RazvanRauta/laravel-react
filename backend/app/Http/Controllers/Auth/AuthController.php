@@ -94,11 +94,17 @@ class AuthController extends ApiController
     public function logout(Request $request): JsonResponse
     {
         try {
-            $request->user()->currentAccessToken()->delete();
-            return $this->successResponse(["success" => true]);
+            $user= $request->user();
+            if(!empty($user)) {
+                $user->tokens()->delete();
+                return $this->successResponse(["success" => true]);
+            }
+            return $this->errorResponse('User not present', 422);
+
         } catch (Exception $error) {
             return $this->errorResponse($error->getMessage(), 422);
         }
+
     }
 
     public function validateLoginCreds() : \Illuminate\Contracts\Validation\Validator

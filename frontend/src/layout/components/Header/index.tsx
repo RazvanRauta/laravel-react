@@ -58,8 +58,9 @@ const Header: React.FC = () => {
       await dispatch(userActions.removeCurrentUser())
       history.push(SIGN_IN_ROUTE)
     } catch (err) {
-      setLoading(false)
       console.log(err)
+    } finally {
+      setLoading(false)
     }
   }
 
