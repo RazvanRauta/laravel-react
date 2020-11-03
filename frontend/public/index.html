@@ -1,28 +1,47 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" prefix="og: https://ogp.me/ns#">
   <head>
     <meta charset="utf-8" />
     <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#000000" />
     <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
-
-    <meta property="og:site_name" content="Amazing Real Estates" />
     <link rel="canonical" href="https://ama.rrazvan.dev" />
+
+    <!-- HTML Meta Tags -->
+    <title>Amazing Real Estate</title>
+    <meta name="description" content="The most amazing app you will ever see" />
+
+    <!-- Google / Search Engine Tags -->
+    <meta itemprop="name" content="Amazing Real Estate" />
+    <meta
+      itemprop="description"
+      content="The most amazing app you will ever see"
+    />
+    <meta itemprop="image" content="https://ama.rrazvan.dev/meta.png" />
+
+    <!-- Facebook Meta Tags -->
     <meta property="og:url" content="https://ama.rrazvan.dev" />
-    <meta property="og:image" content="https://ama.rrazvan.dev/meta.png" />
-    <title>Amazing Real Estates</title>
+    <meta property="og:site_name" content="Amazing Real Estates" />
     <meta property="og:type" content="website" />
     <meta property="og:title" content="Amazing Real Estate" />
     <meta
       property="og:description"
       content="The most amazing app you will ever see"
     />
-    <meta name="description" content="The most amazing app you will ever see" />
-    <meta property="og:url" content="https://ama.rrazvan.dev" />
+    <meta property="og:image" content="https://ama.rrazvan.dev/meta.png" />
     <meta property="og:image:type" content="image/png" />
     <meta property="og:image:width" content="1800" />
     <meta property="og:image:height" content="976" />
+
+    <!-- Twitter Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Amazing Real Estate" />
+    <meta
+      name="twitter:description"
+      content="The most amazing app you will ever see"
+    />
+    <meta name="twitter:image" content="https://ama.rrazvan.dev/meta.png" />
 
     <link
       rel="stylesheet"
@@ -50,15 +69,5 @@
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
-    <input type="hidden" value="%NODE_ENV%" id="node_env_mode" />
-    <script>
-      var mode = document.querySelector('#node_env_mode').value
-      if (
-        mode === 'production' &&
-        typeof window.__REACT_DEVTOOLS_GLOBAL_HOOK__ === 'object'
-      ) {
-        window.__REACT_DEVTOOLS_GLOBAL_HOOK__.inject = function () {}
-      }
-    </script>
   </body>
 </html>

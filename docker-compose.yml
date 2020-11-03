@@ -73,7 +73,7 @@ services:
        NODE_ENV: production
     tty: true
     volumes: 
-     - /home/razvan/certs:/etc/nginx/certs
+     - certs-location:/etc/nginx/certs
 
   mysql:
     image: mysql:5
@@ -115,7 +115,7 @@ services:
     restart: unless-stopped
     volumes:
       - '/opt/server'
-      - /home/razvan/certs:/opt/server/keys
+      - certs-location:/opt/server/keys
     networks:
       - app_network
   
@@ -148,6 +148,9 @@ networks:
     driver: bridge
 
 volumes:
+  certs-location:
+    name: ${CERT_LOCATION}
+    external: false
   dbdata:
     driver: local
     name: dbdata
