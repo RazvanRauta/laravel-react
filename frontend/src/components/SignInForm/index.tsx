@@ -11,6 +11,7 @@ import { Form, Formik, FormikHelpers, FormikProps } from 'formik'
 import React, { useState } from 'react'
 
 import { SETTINGS_ROUTE } from '@/routes'
+import SubmitButton from '../SubmitButton'
 import { useDispatch } from 'react-redux'
 import { useHistory } from 'react-router-dom'
 import useStyles from './styles'
@@ -135,14 +136,10 @@ const SignInFrom: React.FunctionComponent = () => {
                   xs={10}
                   className={classes.submitButton}
                 >
-                  <Button
-                    type="submit"
-                    variant="contained"
-                    color="secondary"
+                  <SubmitButton
                     disabled={isSubmitting || !dirty || !isValid}
-                  >
-                    Submit
-                  </Button>
+                    isSubmitting={isSubmitting}
+                  />
                   <div className="formStatus">
                     {formStatus.type === 'error' ? (
                       <p className={classes.errorMessage}>

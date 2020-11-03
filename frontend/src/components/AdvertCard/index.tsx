@@ -15,14 +15,16 @@ import {
   CardContent,
   CardMedia,
   Chip,
+  CircularProgress,
   Divider,
   IconButton,
+  Tooltip,
   Typography,
 } from '@material-ui/core'
+import React, { useState } from 'react'
 
 import Advert from '@/models/advert'
 import { Link } from 'react-router-dom'
-import React from 'react'
 import User from '@/models/user'
 import format from 'date-fns/format'
 import { useDispatch } from 'react-redux'
@@ -47,12 +49,13 @@ const AdvertCard: React.FC<AdvertCardProps> = ({ advert, user, setError }) => {
   } = advert
   const classes = useStyles()
   const dispatch = useDispatch()
+  const [loading, setLoading] = useState(false)
 
   const handleClick = async (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
     event.stopPropagation()
-    console.log('hello')
+    setLoading(true)
     await dispatch(advertsActions.deleteAdvert(advert.id))
     try {
     } catch (error) {
@@ -84,40 +87,56 @@ const AdvertCard: React.FC<AdvertCardProps> = ({ advert, user, setError }) => {
             </Typography>
             <Divider classes={{ root: classes.divider }} />
             <Box display="flex" justifyContent="space-between" marginTop={1}>
-              <Chip
-                icon={<AttachMoney />}
-                label={`${price} ${priceType}`}
-                color="secondary"
-                variant="outlined"
-                className={classes.chip}
-              />
-              <Chip
-                icon={<HomeOutlined />}
-                label={rooms > 1 ? `${rooms} Rooms` : `One Room`}
-                color="secondary"
-                variant="outlined"
-                className={classes.chip}
-              />
-              <Chip
-                icon={<Today />}
-                label={format(
-                  new Date(postedDate.replace(/ /g, 'T') + 'Z'),
-                  'MMM dd, yyyy'
-                )}
-                color="secondary"
-                variant="outlined"
-                className={classes.chip}
-              />
+              <Tooltip title="Price" arrow leaveDelay={200}>
+                <Chip
+                  icon={<AttachMoney />}
+                  label={`${price} ${priceType}`}
+                  color="secondary"
+                  variant="outlined"
+                  className={classes.chip}
+                />
+              </Tooltip>
+              <Tooltip title="Number of rooms" arrow leaveDelay={200}>
+                <Chip
+                  icon={<HomeOutlined />}
+                  label={rooms > 1 ? `${rooms} Rooms` : `One Room`}
+                  color="secondary"
+                  variant="outlined"
+                  className={classes.chip}
+                />
+              </Tooltip>
+              <Tooltip title="Date posted" arrow leaveDelay={200}>
+                <Chip
+                  icon={<Today />}
+                  label={format(
+                    new Date(postedDate.replace(/ /g, 'T') + 'Z'),
+                    'MMM dd, yyyy'
+                  )}
+                  color="secondary"
+                  variant="outlined"
+                  className={classes.chip}
+                />
+              </Tooltip>
             </Box>
           </CardContent>
         </CardActionArea>
       </Link>
       {user && (
-        <IconButton className={classes.delete} onClick={handleClick}>
-          <Avatar>
-            <Delete color="secondary" />
-          </Avatar>
-        </IconButton>
+        <Tooltip title="Delete advert" arrow leaveDelay={200}>
+          <IconButton
+            disabled={loading}
+            className={classes.delete}
+            onClick={handleClick}
+          >
+            <Avatar>
+              {!loading ? (
+                <Delete color="secondary" />
+              ) : (
+                <CircularProgress size={20} color="secondary" />
+              )}
+            </Avatar>
+          </IconButton>
+        </Tooltip>
       )}
     </Card>
   )

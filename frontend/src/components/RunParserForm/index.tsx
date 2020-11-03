@@ -10,6 +10,7 @@ import React, { useState } from 'react'
 
 import ParserApi from '@/services/parser-api'
 import { RootState } from '@/redux/rootReducer'
+import SubmitButton from '../SubmitButton'
 import { runParserSchema } from '@/constants'
 import { useSelector } from 'react-redux'
 import useStyles from './styles'
@@ -164,14 +165,11 @@ const RunParserForm: React.FC<Props> = ({ inProgress }) => {
                   xs={10}
                   className={classes.submitButton}
                 >
-                  <Button
-                    type="submit"
-                    variant="contained"
-                    color="secondary"
+                  <SubmitButton
                     disabled={isSubmitting || inProgress || !isValid}
-                  >
-                    Submit*
-                  </Button>
+                    isSubmitting={isSubmitting}
+                    title="Submit*"
+                  />
                   <div className="formStatus">
                     {formStatus.type === 'error' ? (
                       <p className={classes.errorMessage}>

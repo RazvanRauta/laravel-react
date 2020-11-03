@@ -12,6 +12,7 @@ import Advert from '@/models/advert'
 import AdvertsApi from '@/services/adverts-api'
 import { AttachMoney } from '@material-ui/icons'
 import { RootState } from '@/redux/rootReducer'
+import SubmitButton from '../SubmitButton'
 import { editFormSchema } from '@/constants'
 import { useHistory } from 'react-router-dom'
 import { useSelector } from 'react-redux'
@@ -199,14 +200,10 @@ const EditAdvertForm: React.FC<Advert> = (adv) => {
                   xs={10}
                   className={classes.submitButton}
                 >
-                  <Button
-                    type="submit"
-                    variant="contained"
-                    color="secondary"
+                  <SubmitButton
                     disabled={isSubmitting || !isValid}
-                  >
-                    Save
-                  </Button>
+                    isSubmitting={isSubmitting}
+                  />
                   <div className="formStatus">
                     {formStatus.type === 'error' ? (
                       <p className={classes.errorMessage}>

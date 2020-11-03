@@ -14,6 +14,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   delete: {
     position: 'absolute',
+    paddingBottom: 0,
     top: '0',
     right: '0',
   },

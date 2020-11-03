@@ -12,6 +12,7 @@ import PriceRangeSlider from '../PriceRangeSlider'
 import React from 'react'
 import RoomsCheckBox from '../RoomsCheckBox'
 import { RootState } from '@/redux/rootReducer'
+import SubmitButton from '../SubmitButton'
 import { useSelector } from 'react-redux'
 
 interface DrawerFormProps {
@@ -72,14 +73,10 @@ const DrawerForm: React.FC<DrawerFormProps> = ({
               />
             </FormGroup>
             <Box marginTop={5}>
-              <Button
-                type="submit"
-                variant="contained"
-                color="secondary"
+              <SubmitButton
                 disabled={isSubmitting}
-              >
-                Submit
-              </Button>
+                isSubmitting={isSubmitting}
+              />
             </Box>
           </Form>
         )

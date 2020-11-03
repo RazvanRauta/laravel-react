@@ -11,14 +11,16 @@ import {
   Avatar,
   Box,
   Button,
+  CircularProgress,
   IconButton,
   Menu,
   MenuItem,
   Toolbar,
+  Tooltip,
   Typography,
 } from '@material-ui/core'
 import { Link, useHistory } from 'react-router-dom'
-import React, { Fragment, useEffect } from 'react'
+import React, { Fragment, useEffect, useState } from 'react'
 import { SETTINGS_ROUTE, SIGN_IN_ROUTE, SWAGGER_DOCS } from '@/routes'
 import { useDispatch, useSelector } from 'react-redux'
 
@@ -28,7 +30,8 @@ import useMediaQuery from '@material-ui/core/useMediaQuery'
 import useStyles from './styles'
 
 const Header: React.FC = () => {
-  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
+  const [loading, setLoading] = useState<boolean>(false)
   const classes = useStyles()
   const dispatch = useDispatch()
   const history = useHistory()
@@ -49,9 +52,15 @@ const Header: React.FC = () => {
   }
 
   const handleLogout = async () => {
-    await dispatch(authActions.logout())
-    await dispatch(userActions.removeCurrentUser())
-    history.push(SIGN_IN_ROUTE)
+    setLoading(true)
+    try {
+      await dispatch(authActions.logout())
+      await dispatch(userActions.removeCurrentUser())
+      history.push(SIGN_IN_ROUTE)
+    } catch (err) {
+      setLoading(false)
+      console.log(err)
+    }
   }
 
   const handleReset = async () => {
@@ -149,12 +158,18 @@ const Header: React.FC = () => {
                 className={classes.button}
                 onClick={handleLogout}
               >
-                Log Out
+                {!loading ? (
+                  'Log Out'
+                ) : (
+                  <CircularProgress size={20} color="secondary" />
+                )}
               </Button>
             )}
             {user && (
               <Box mx={2}>
-                <Avatar>{user.name[0].toUpperCase()}</Avatar>
+                <Tooltip title={user.name} arrow leaveDelay={200}>
+                  <Avatar>{user.name[0].toUpperCase()}</Avatar>
+                </Tooltip>
               </Box>
             )}
           </Box>
@@ -224,7 +239,11 @@ const Header: React.FC = () => {
                     className={classes.button}
                     onClick={handleLogout}
                   >
-                    Log Out
+                    {!loading ? (
+                      'Log Out'
+                    ) : (
+                      <CircularProgress size={20} color="secondary" />
+                    )}
                   </Button>
                 </MenuItem>
               )}
