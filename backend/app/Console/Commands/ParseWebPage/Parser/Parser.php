@@ -56,15 +56,13 @@ class Parser
                     $doc = new DOMDocument();
                     @$doc->loadHtml(file_get_contents($url));
 
-                    $items = $this->findElementsByClassName('bd-item ', $doc);
+                    $items = $this->findElementsByClassName('listing-item', $doc);
 
                     /** @var DOMElement $item */
                     foreach ($items as $item) {
-                        /** @var DOMElement $itemTitle */
-                        $itemTitle = $this->getElementsByClass($item, 'div', 'title')[0];
                         /** @var DOMElement $element */
-                        $element = $itemTitle->getElementsByTagName('a')[0];
-
+                        $element = is_array($this->getElementsByClass($item, 'a', 'teaser-title')) ? $this->getElementsByClass($item, 'a', 'teaser-title')[0] : null;
+                        /** @var DOMElement $itemTitle */
                         if ($element !== null && !empty($element->getAttribute('href')) && $this->checkIfUrlIsValid($element->getAttribute('href'))) {
 
                             $arr = explode('/', $element->getAttribute('href'));
@@ -73,7 +71,7 @@ class Parser
                             $advId = preg_replace("/[\D]/", "", $advId);
                             $advert = Advert::where('advertId', '=', $advId)->first();
                             if (!$advert) {
-                                $newAdvert = $this->parseAdvertPage($element->getAttribute('href'));
+                                $newAdvert = $this->parseAdvertPage($element->getAttribute('href'), $advId);
                                 if ($newAdvert) {
                                     $newAdverts[] = $newAdvert;
                                 }
@@ -140,9 +138,10 @@ class Parser
 
     /**
      * @param string $url
+     * @param int $advId
      * @return Advert | boolean
      */
-    private function parseAdvertPage(string $url)
+    private function parseAdvertPage(string $url, int $advId)
     {
         try {
             $advPage = new DOMDocument();
@@ -150,112 +149,106 @@ class Parser
             $advPage->preserveWhiteSpace = false;
 
 
-            if (!empty($this->getElementsByClass($advPage, 'p', 'fr f14')[0])) {
-                $advId = $this->getElementsByClass($advPage, 'p', 'fr f14')[0]->nodeValue;
-                $advId = preg_replace("/[\D]/", "", $advId);
+            $advert = new Advert();
+            $advert->advertId = $advId;
+            $advert->advertUrl = $url;
 
-                $advert = Advert::where('advertId', '=', $advId)->first();
+            if (!empty($this->getElementsByClass($advPage, 'h1', 'h-giant media-body mb-0')[0])) {
+                $title = $this->getElementsByClass($advPage, 'h1', 'h-giant media-body mb-0')[0]->nodeValue;
+                $advert->title = trim($title);
+            }
 
-                if (!$advert) {
+            if (!empty($this->getElementsByClass($advPage, 'div', 'top-description')[0])) {
+                $description = $this->getElementsByClass($advPage, 'div', 'top-description')[0]->nodeValue;
+                $advert->description = trim($description);
+            }
 
-                    $advert = new Advert();
-                    $advert->advertId = $advId;
-                    $advert->advertUrl = $url;
 
-                    if (!empty($this->getElementsByClass($advPage, 'h1', 'f24')[0])) {
-                        $title = $this->getElementsByClass($advPage, 'h1', 'f24')[0]->nodeValue;
-                        $advert->title = trim($title);
+            if (!empty($this->getElementsByClass($advPage, 'div', 'price-block')[0])) {
+                $parentNode = $this->getElementsByClass($advPage, 'div', 'price-block')[0];
+                $price = $parentNode->getElementsByTagName('strong')[0]->nodeValue;
+
+                $advert->price = preg_replace("/[\D]/", "", trim($price)) ?: 10;
+                $advert->priceType = preg_replace("/[^\D]/", "", trim($price)) ?: '/ unknown';
+            }
+
+            $infoBlocks = $this->getElementsByClass($advPage, 'div', 'info-mini-block');
+
+            if (!empty($infoBlocks) && is_array($infoBlocks) && count($infoBlocks) > 0 && isset($infoBlocks[1], $infoBlocks[1]->textContent)) {
+                $postDate = trim(explode(' ID', explode(' Опубликовано ', $infoBlocks[1]->textContent)[1])[0]);
+                $advert->postedDate = $postDate ?: Carbon::now();
+
+            }
+
+            $tables = $advPage->getElementsByTagName('table');
+
+            foreach ($tables as $table) {
+
+                $tableData = $this->parseTable($table);
+                foreach ($tableData as $data) {
+
+                    if (!empty($data[0]) && strpos($data[0], 'Площадь общая/жилая/кухня') > -1) {
+
+                        $advert->size = $data[1] ?: '';
                     }
 
-                    if (!empty($this->getElementsByClass($advPage, 'div', 'description')[0])) {
-                        $description = $this->getElementsByClass($advPage, 'div', 'description')[0]->nodeValue;
-                        $advert->description = trim($description);
+                    if (!empty($data[0]) && strpos($data[0], 'Комнат всего') > -1) {
+
+                        $advert->rooms = $data[1] ? preg_replace("/[\D]/", "", explode('/', $data[1])[0]) : '';
                     }
 
+                    if (!empty($data[0]) && strpos($data[0], 'Этаж') > -1) {
 
-                    if (!empty($this->getElementsByClass($advPage, 'span', 'price-byr')[0])) {
-                        $price = $this->getElementsByClass($advPage, 'span', 'price-byr')[0]->nodeValue;
-                        $advert->price = preg_replace("/[\D]/", "", trim($price));
-                        $advert->priceType = preg_replace("/[^\D]/", "", trim($price));
+                        $advert->floor = $data[1] ?: '';
                     }
 
-                    $tables = $advPage->getElementsByTagName('table');
+                    if (!empty($data[0]) && strpos($data[0], 'Область') > -1) {
 
-                    foreach ($tables as $table) {
-
-                        $tableData = $this->parseTable($table);
-                        foreach ($tableData as $data) {
-
-                            if (!empty($data[0]) && strpos($data[0], 'Дата обновления') > -1) {
-
-                                $advert->postedDate = $data[1] ?: Carbon::now();
-                            }
-
-                            if (!empty($data[0]) && strpos($data[0], 'Площадь общая/жилая/кухня') > -1) {
-
-                                $advert->size = $data[1] ?: '';
-                            }
-
-                            if (!empty($data[0]) && strpos($data[0], 'Комнат всего') > -1) {
-
-                                $advert->rooms = $data[1] ? preg_replace("/[\D]/", "", explode('/', $data[1])[0]) : '';
-                            }
-
-                            if (!empty($data[0]) && strpos($data[0], 'Этаж') > -1) {
-
-                                $advert->floor = $data[1] ?: '';
-                            }
-
-                            if (!empty($data[0]) && strpos($data[0], 'Область') > -1) {
-
-                                $advert->region = $data[1] ?: '';
-                            }
-
-                            if (!empty($data[0]) && strpos($data[0], 'Населенный') > -1) {
-
-                                $advert->city = $data[1] ?: '';
-                            }
-                        }
-
-                    }
-                    try {
-                        $advert->save();
-
-                        $photoItems = $this->getElementsByClass($advPage, 'div', 'photo-item');
-
-                        $photoArray = [];
-
-                        /** @var DOMElement $photoItem */
-                        foreach ($photoItems as $photoItem) {
-                            if (!empty($photoItem->getElementsByTagName('img')[0])) {
-
-                                $imgSrc = $photoItem->getElementsByTagName('img')[0]->getAttribute('src');
-
-                                $advertImage = new AdvertImage();
-                                $advertImage->imageUrl = $imgSrc;
-                                $advertImage->advert_id = $advert->id;
-
-                                $photoArray[] = $advertImage;
-
-
-                            }
-                        }
-
-                        $advert->images()->saveMany($photoArray);
-
-                        printf("\nAdvert with url: %s was added\n", $advert->advertUrl);
-
-                        return $advert;
-
-                    } catch (QueryException $exception) {
-
-                        printf("\nError while saving advert with url: %s. %s \n", $advert->advertUrl, $exception->getMessage());
+                        $advert->region = $data[1] ?: '';
                     }
 
+                    if (!empty($data[0]) && strpos($data[0], 'Населенный') > -1) {
 
+                        $advert->city = $data[1] ?: '';
+                    }
                 }
 
             }
+            try {
+                $advert->save();
+
+                $photoItems = $this->getElementsByClass($advPage, 'div', 'lightSlider lSSlide');
+
+                $photoArray = [];
+
+                /** @var DOMElement $photoItem */
+                foreach ($photoItems as $photoItem) {
+                    if (!empty($photoItem->getElementsByTagName('img')[0])) {
+
+                        $imgSrc = $photoItem->getElementsByTagName('img')[0]->getAttribute('src');
+
+                        $advertImage = new AdvertImage();
+                        $advertImage->imageUrl = $imgSrc;
+                        $advertImage->advert_id = $advert->id;
+
+                        $photoArray[] = $advertImage;
+
+
+                    }
+                }
+
+                $advert->images()->saveMany($photoArray);
+
+                printf("\nAdvert with url: %s was added\n", $advert->advertUrl);
+
+                return $advert;
+
+            } catch (QueryException $exception) {
+
+                printf("\nError while saving advert with url: %s. %s \n", $advert->advertUrl, $exception->getMessage());
+            }
+
+
         } catch (Exception $exception) {
 
             print($exception->getMessage());
