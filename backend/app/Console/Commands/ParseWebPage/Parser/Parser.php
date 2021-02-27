@@ -217,27 +217,33 @@ class Parser
             try {
                 $advert->save();
 
-                $photoItems = $this->getElementsByClass($advPage, 'div', 'lightSlider lSSlide');
+                $photoItems = $advPage->getElementById('object-gallery');
+                $photoItems = $photoItems ? $this->getElementsByClass($photoItems, 'a', 'object-gallery-item') : null;
 
                 $photoArray = [];
 
                 /** @var DOMElement $photoItem */
                 foreach ($photoItems as $photoItem) {
-                    if (!empty($photoItem->getElementsByTagName('img')[0])) {
+                    try {
+                        if ($photoItem->getAttribute("data-src") !== null) {
 
-                        $imgSrc = $photoItem->getElementsByTagName('img')[0]->getAttribute('src');
+                            $imgSrc = $photoItem->getAttribute("data-src");
+                            
+                            $advertImage = new AdvertImage();
+                            $advertImage->imageUrl = $imgSrc;
+                            $advertImage->advert_id = $advert->id;
 
-                        $advertImage = new AdvertImage();
-                        $advertImage->imageUrl = $imgSrc;
-                        $advertImage->advert_id = $advert->id;
-
-                        $photoArray[] = $advertImage;
+                            $photoArray[] = $advertImage;
 
 
+                        }
+                    } catch (Exception $e) {
+                        print($e->getMessage());
                     }
                 }
 
                 $advert->images()->saveMany($photoArray);
+
 
                 printf("\nAdvert with url: %s was added\n", $advert->advertUrl);
 
