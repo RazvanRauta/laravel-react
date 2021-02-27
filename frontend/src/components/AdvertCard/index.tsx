@@ -5,6 +5,8 @@
  */
 
 import * as advertsActions from '@/redux/actions/adverts'
+import isArray from 'lodash/isArray'
+import isUndefined from  'lodash/isUndefined'
 
 import { AttachMoney, Delete, HomeOutlined, Today } from '@material-ui/icons'
 import {
@@ -69,7 +71,7 @@ const AdvertCard: React.FC<AdvertCardProps> = ({ advert, user, setError }) => {
         <CardActionArea>
           <CardMedia
             className={classes.media}
-            image={images[0].imageUrl}
+            image={isArray(images) && !isUndefined(images[0]) ? images[0].imageUrl : 'https://st3.depositphotos.com/23594922/31822/v/600/depositphotos_318221368-stock-illustration-missing-picture-page-for-website.jpg'}
             title={title}
           />
           <CardContent className={classes.content}>
